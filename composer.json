@@ -1,0 +1,28 @@
+{
+    "name": "sioweb/oxid-kernel",
+    "description": "Symfony kernel for oxid",
+    "type": "composer-plugin",
+    "authors": [
+        {
+            "name": "Sascha Weidner",
+            "email": "support@sioweb.de"
+        }
+    ],
+    "keywords": [
+        "oxid",
+        "kernel"
+    ],
+    "homepage": "https://github.com/sioweb/oxidkernel",
+    "license": "GPL-3.0-only",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Sioweb\\Oxid\\Kernel\\": "./src/"
+        }
+    },
+    "extra": {
+        "class": [
+            "Sioweb\\Oxid\\Kernel\\Composer\\Plugin"
+        ]
+    }
+}

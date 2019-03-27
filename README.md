@@ -6,7 +6,7 @@ Like Contao/ManagerPlugin
 
 Need for [API](https://github.com/Sioweb/OxidApi)
 
-## Why copy module into * /modules/*vendor/`
+## Why copy module into `/modules/*vendor/`
 
 Required files:
 
@@ -39,7 +39,18 @@ class YourModuleBundle extends Bundle
 {
     public function getContainerMetadata()
     {
-        return new Metadata();
+        return new Metadata(); // settings, controller
     }
 }
+```
+
+Can Events be loaded as services/events?
+
+```
+services:
+    your.module.listener.activate:
+        class: Your\Module\Listener\Event
+        public: true
+        tags:
+            - { name: oxid.event, hook: activateModule, method: activateModule, priority: -256 }
 ```

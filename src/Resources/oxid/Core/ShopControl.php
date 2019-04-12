@@ -20,7 +20,6 @@ class ShopControl extends ShopControl_parent
             $response->send();
             $kernel->terminate($request, $response);
         } else {
-            die('Wrong');
             parent::start($controllerKey, $function, $parameters, $viewsChain);
         }
     }

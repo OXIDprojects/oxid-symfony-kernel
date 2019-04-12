@@ -11,6 +11,7 @@ class RequestListener
 {
     public function onKernelRequest(KernelEvent $event)
     {
+        die('Hallo')
         $response = new Response();
         $response->setStatusCode(404);
         $event->setResponse($response);

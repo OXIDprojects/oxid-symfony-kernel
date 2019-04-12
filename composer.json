@@ -21,7 +21,10 @@
         "symfony/routing": "^3",
         "symfony/http-kernel": "^3",
         "symfony/class-loader": "^3",
-        "symfony/framework-bundle": "^3"
+        "symfony/framework-bundle": "^3",
+        "doctrine/doctrine-bundle": "*",
+        "doctrine/orm": "^2.0",
+        "symfony/monolog": "^2"
     },
     "autoload": {
         "psr-4": {

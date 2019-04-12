@@ -2,25 +2,16 @@
 
 namespace Sioweb\Oxid\Kernel\HttpKernel;
 
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
-use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerArgumentsEvent;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Event\PostResponseEvent;
-use Symfony\Component\HttpFoundation\Exception\ConflictingHeadersException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Event\FilterControllerArgumentsEvent;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
@@ -31,8 +22,8 @@ class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
     {
         parent::__construct($dispatcher, $resolver, $requestStack, $_argumentResolver);
         $this->_argumentResolver = $_argumentResolver;
-        
-        if (null === $this->argumentResolver) {
+
+        if (null === $this->_argumentResolver) {
             $this->_argumentResolver = $resolver;
         }
     }
@@ -47,10 +38,10 @@ class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
         $event = new FilterControllerEvent($this, $controller, $request, $type);
         $this->dispatcher->dispatch(KernelEvents::CONTROLLER, $event);
         $controller = $event->getController();
-        
+
         // controller arguments
         $arguments = $this->_argumentResolver->getArguments($request, $controller);
-        
+
         $event = new FilterControllerArgumentsEvent($this, $controller, $arguments, $request, $type);
         $this->dispatcher->dispatch(KernelEvents::CONTROLLER_ARGUMENTS, $event);
         $controller = $event->getController();

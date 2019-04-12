@@ -15,6 +15,8 @@ class Kernel extends HttpKernel
     public function registerBundles()
     {
         $bundles = [
+            new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Sioweb\Oxid\Kernel\OxidKernelBundle(),
         ];
@@ -70,6 +72,8 @@ class Kernel extends HttpKernel
         if (null === ($container = $this->getContainer())) {
             return;
         }
+
+        $container->get('doctrine')->getManager();
         
         // Set the plugin loader again so it is available at runtime (synthetic service)
         $container->set('sioweb.oxid.kernel.bundles', new Class(
@@ -96,6 +100,7 @@ class Kernel extends HttpKernel
                         ));
                     }
                 }
+
                 return $Collection;
             }
         });

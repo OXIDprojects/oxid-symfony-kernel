@@ -1,0 +1,2 @@
+oxid-kernel:
+    bundles: { sioweb/oxid-api: Sioweb\Oxid\Api\Kernel\Plugin }

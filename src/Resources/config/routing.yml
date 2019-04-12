@@ -1,0 +1,6 @@
+kernel_catch_all:
+    path: /{_url_fragment}
+    defaults:
+        _controller: "OxidKernelBundle:Frontend:index"
+    requirements:
+        _url_fragment: .*

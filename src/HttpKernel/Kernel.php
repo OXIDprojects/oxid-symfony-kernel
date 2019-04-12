@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel AS HttpKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Kernel extends HttpKernel
@@ -14,7 +15,7 @@ class Kernel extends HttpKernel
     {
         $bundles = [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Sioweb\Oxid\Kernel\OxidKernelBundle()
+            new \Sioweb\Oxid\Kernel\OxidKernelBundle(),
         ];
 
         $Config = [];
@@ -32,7 +33,7 @@ class Kernel extends HttpKernel
         $loader->load('bundles.yml');
 
         foreach($ContainerBuilder->getExtensionConfig('oxid-kernel')[0]['bundles'] as $bundle) {
-            $bundles[] = new $bundle();
+            array_unshift($bundles, new $bundle());
         }
 
         return $bundles;
@@ -57,5 +58,46 @@ class Kernel extends HttpKernel
     {
         // die('<pre>' . print_r($this->getRootDir().'/../Resources/config/config_'.$this->getEnvironment().'.yml', true));
         $loader->load($this->getRootDir().'/../Resources/config/config_'.$this->getEnvironment().'.yml');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function initializeContainer()
+    {
+        parent::initializeContainer();
+        if (null === ($container = $this->getContainer())) {
+            return;
+        }
+        
+        // Set the plugin loader again so it is available at runtime (synthetic service)
+        $container->set('sioweb.oxid.kernel.bundles', new Class(
+            $this->getBundles(), $container->get('routing.loader'), $container->get('kernel')
+        ) {
+            private $loader;
+
+            private $kernel;
+
+            private $bundles;
+
+            public function __construct($bundles, $loader, $kernel)
+            {
+                $this->bundles = $bundles;
+                $this->loader = $loader;
+                $this->kernel = $kernel;
+            }
+            public function getRoutes()
+            {
+                $Collection = new RouteCollection();
+                foreach($this->bundles as $bundle) {
+                    if($bundle instanceof BundleRoutesInterface) {
+                        $Collection->addCollection($bundle->getRouteCollection(
+                            $this->loader->getResolver(), $this->kernel
+                        ));
+                    }
+                }
+                return $Collection;
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 services:
     sioweb.oxid.kernel.listener.request:
         class: Sioweb\Oxid\Kernel\EventListener\RequestListener
+        arguments:
+            - "@service_container"
         tags:
             - { name: kernel.event_listener, event: kernel.request }

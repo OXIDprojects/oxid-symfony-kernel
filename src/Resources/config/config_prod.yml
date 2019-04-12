@@ -1,2 +1,8 @@
 imports:
     - { resource: parameters.yml }
+
+framework:
+    router:
+        resource: "sioweb.oxid.kernel.bundles:getRoutes"
+        type: service
+        strict_requirements: "%kernel.debug%"

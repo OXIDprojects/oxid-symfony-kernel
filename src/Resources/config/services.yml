@@ -1,0 +1,4 @@
+services:
+    sioweb.oxid.kernel.bundles:
+        synthetic: true
+        public: true

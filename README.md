@@ -6,6 +6,18 @@ Like Contao/ManagerPlugin
 
 Need for [API](https://github.com/Sioweb/OxidApi)
 
+## Autoregistrate bundles
+
+Just add following to your oxid module composer.json:
+
+```
+"extra": {
+    "oxid-kernel-plugin": "Your\\Namespace\\OxidKernel\\Plugin"
+},
+```
+
+Please replace `Your\\Namespace` with your Namespace and add file OxidKernel\Plugin.php to your module. Have a look at [Sioweb/OxidApi](https://github.com/Sioweb/OxidApi) for more information.
+
 ## Why copy module into `/modules/*vendor/`
 
 Required files:

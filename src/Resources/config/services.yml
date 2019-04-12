@@ -2,3 +2,9 @@ services:
     sioweb.oxid.kernel.bundles:
         synthetic: true
         public: true
+    oxid_http_kernel:
+        class: Sioweb\Oxid\Kernel\HttpKernel\HttpKernel
+        arguments:
+            - "@event_dispatcher"
+            - "@controller_resolver"
+            - "@request_stack"

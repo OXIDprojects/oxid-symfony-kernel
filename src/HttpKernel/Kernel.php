@@ -8,6 +8,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Sioweb\Oxid\Kernel\Bundle\BundleRoutesInterface;
 
 class Kernel extends HttpKernel
 {
@@ -75,9 +76,7 @@ class Kernel extends HttpKernel
             $this->getBundles(), $container->get('routing.loader'), $container->get('kernel')
         ) {
             private $loader;
-
             private $kernel;
-
             private $bundles;
 
             public function __construct($bundles, $loader, $kernel)
@@ -86,6 +85,7 @@ class Kernel extends HttpKernel
                 $this->loader = $loader;
                 $this->kernel = $kernel;
             }
+
             public function getRoutes()
             {
                 $Collection = new RouteCollection();
@@ -99,5 +99,15 @@ class Kernel extends HttpKernel
                 return $Collection;
             }
         });
+    }
+
+    /**
+     * Gets a HTTP kernel from the container.
+     *
+     * @return HttpKernel
+     */
+    protected function getHttpKernel()
+    {
+        return $this->container->get('oxid_http_kernel');
     }
 }

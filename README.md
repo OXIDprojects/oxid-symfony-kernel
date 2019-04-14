@@ -1,14 +1,8 @@
 # OxidKernel
 
-https://stackoverflow.com/questions/13082254/is-there-a-way-to-update-automatically-the-appkernel-in-symfony2
-
-Like Contao/ManagerPlugin
-
-Need for [API](https://github.com/Sioweb/OxidApi)
-
 ## Autoregistrate bundles
 
-Just add following to your oxid module composer.json:
+This plugin allows u, to add symfony bundles to oxid, just add this to composer.json:
 
 ```
 "extra": {

@@ -30,6 +30,7 @@ class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
 
     public function handleOxid(Request $request, $type = self::MASTER_REQUEST)
     {
+        $_GET = array_merge($_GET, (array)$request->attributes->all());
         // load controller
         if (false === $controller = $this->resolver->getController($request)) {
             throw new NotFoundHttpException(sprintf('Unable to find the controller for path "%s". The route is wrongly configured.', $request->getPathInfo()));

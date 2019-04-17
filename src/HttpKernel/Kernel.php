@@ -72,8 +72,6 @@ class Kernel extends HttpKernel
         if (null === ($container = $this->getContainer())) {
             return;
         }
-
-        $container->get('doctrine')->getManager();
         
         // Set the plugin loader again so it is available at runtime (synthetic service)
         $container->set('sioweb.oxid.kernel.bundles', new Class(

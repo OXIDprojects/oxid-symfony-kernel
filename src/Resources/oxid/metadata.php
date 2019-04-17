@@ -21,6 +21,8 @@ $aModule = [
     'extend' => [
         \OxidEsales\Eshop\Core\ShopControl::class =>
             Sioweb\Oxid\Kernel\Legacy\Core\ShopControl::class,
+        \OxidEsales\Eshop\Core\SeoDecoder::class =>
+            Sioweb\Oxid\Kernel\Legacy\Core\SeoDecoder::class,
     ],
     'events' => [
         'onActivate' => '\Sioweb\Oxid\Kernel\Legacy\Core\Events::onActivate',

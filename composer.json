@@ -26,6 +26,10 @@
         "doctrine/orm": "^2.0",
         "symfony/monolog": "^2"
     },
+    "require-dev": {
+        "ext-zip": "*",
+        "composer/composer": "^1.1"
+    },
     "autoload": {
         "psr-4": {
             "Sioweb\\Oxid\\Kernel\\Legacy\\": "../../../source/modules/sioweb/Kernel",

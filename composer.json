@@ -2,7 +2,6 @@
     "name": "sioweb/oxid-kernel",
     "description": "Symfony kernel for oxid",
     "type": "composer-plugin",
-    "version": "0.0.6",
     "authors": [
         {
             "name": "Sascha Weidner",
@@ -24,7 +23,7 @@
         "symfony/framework-bundle": "^3",
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "^2.0",
-        "symfony/monolog": "^2"
+        "symfony/monolog-bundle": "^2"
     },
     "require-dev": {
         "ext-zip": "*",

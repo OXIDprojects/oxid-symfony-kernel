@@ -1,21 +1,14 @@
 <?php
-/**
- * Copyright © OXID eSales AG. All rights reserved.
- * See LICENSE file for license details.
- */
 
 namespace Sioweb\Oxid\Kernel\Legacy\Core;
 
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Seo encoder base
- */
 class SeoDecoder extends SeoDecoder_parent
 {
 
     /**
-     * processSeoCall handles Server information and passes it to decoder
+     * processSeoCall check if symfony route is active, otherwise go for default function
      *
      * @param string $sRequest request
      * @param string $sPath    path
@@ -24,8 +17,8 @@ class SeoDecoder extends SeoDecoder_parent
      */
     public function processSeoCall($sRequest = null, $sPath = null)
     {
-        $request = Request::createFromGlobals();
-        if($request->query->get('_controller') != 1) {
+        $_controller = Request::createFromGlobals()->query->get('_controller');
+        if(!empty($_controller) && $_controller != 1) {
             return;
         }
 

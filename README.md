@@ -67,3 +67,7 @@ In der composer.json kann dann angegeben werden, dass die Daten unter `src/Resou
 ```
 
 In der Datei `Plugin.php` können Routen und Konfigurationen geladen werden.
+
+### Aber was ist mit den Oxid-Routen?
+
+OxidKernel wird den regulären Betrieb nicht stören. Ein Eventlistener prüft zunächst, ob eine Route überhaupt in einer YAML-Datei hinterlegt wurde und ob diese geladen werden kann. Sollte die Route nicht gefunden werden, wird Oxid alles weitere Überlassen. Daher würde ich vorschlagen, dass die Routen sich besser nicht mit den Kategorien in Oxid überschneiden.

@@ -12,6 +12,7 @@ class ShopControl extends ShopControl_parent
         $kernel = new Kernel('prod', false);
         $kernel->loadClassCache();
         //$kernel = new AppCache($kernel);
+        
         $request = Request::createFromGlobals();
         $response = $kernel->handle($request);
         $responseStatusCode = $response->getStatusCode();
@@ -20,6 +21,7 @@ class ShopControl extends ShopControl_parent
             $response->send();
             $kernel->terminate($request, $response);
         } else {
+            $response->setCache(array('max_age' => 0));
             parent::start($controllerKey, $function, $parameters, $viewsChain);
         }
     }

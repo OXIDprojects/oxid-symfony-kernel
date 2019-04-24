@@ -4,15 +4,10 @@ namespace Sioweb\Oxid\Kernel\HttpKernel;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-<<<<<<< HEAD
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-=======
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
->>>>>>> 5095cf84bef28a67e7bc7eab40fa8755931713e8
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerArgumentsEvent;
@@ -80,7 +75,6 @@ class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
 
         return $this->filterResponse($response, $request, $type);
     }
-<<<<<<< HEAD
 
     /**
      * Filters a response object.
@@ -119,6 +113,4 @@ class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
         $this->dispatcher->dispatch(KernelEvents::FINISH_REQUEST, new FinishRequestEvent($this, $request, $type));
         $this->requestStack->pop();
     }
-=======
->>>>>>> 5095cf84bef28a67e7bc7eab40fa8755931713e8
 }

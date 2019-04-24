@@ -60,3 +60,6 @@ In der composer.json kann dann angegeben werden, dass die Daten unter `src/Resou
         "src/Resources/oxid"
     ]
 }
+```
+
+In der Datei `Plugin.php` können Routen und Konfigurationen geladen werden.

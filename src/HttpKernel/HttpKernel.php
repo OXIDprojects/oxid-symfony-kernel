@@ -4,8 +4,15 @@ namespace Sioweb\Oxid\Kernel\HttpKernel;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+<<<<<<< HEAD
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
+=======
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+>>>>>>> 5095cf84bef28a67e7bc7eab40fa8755931713e8
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerArgumentsEvent;
@@ -73,4 +80,45 @@ class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
 
         return $this->filterResponse($response, $request, $type);
     }
+<<<<<<< HEAD
+
+    /**
+     * Filters a response object.
+     *
+     * @param Response $response A Response instance
+     * @param Request  $request  An error message in case the response is not a Response object
+     * @param int      $type     The type of the request (one of HttpKernelInterface::MASTER_REQUEST or HttpKernelInterface::SUB_REQUEST)
+     *
+     * @return Response The filtered Response instance
+     *
+     * @throws \RuntimeException if the passed object is not a Response instance
+     */
+    private function filterResponse(Response $response, Request $request, $type)
+    {
+        $event = new FilterResponseEvent($this, $request, $type, $response);
+
+        $this->dispatcher->dispatch(KernelEvents::RESPONSE, $event);
+
+        $this->finishRequest($request, $type);
+
+        return $event->getResponse();
+    }
+
+    /**
+     * Publishes the finish request event, then pop the request from the stack.
+     *
+     * Note that the order of the operations is important here, otherwise
+     * operations such as {@link RequestStack::getParentRequest()} can lead to
+     * weird results.
+     *
+     * @param Request $request
+     * @param int     $type
+     */
+    private function finishRequest(Request $request, $type)
+    {
+        $this->dispatcher->dispatch(KernelEvents::FINISH_REQUEST, new FinishRequestEvent($this, $request, $type));
+        $this->requestStack->pop();
+    }
+=======
+>>>>>>> 5095cf84bef28a67e7bc7eab40fa8755931713e8
 }

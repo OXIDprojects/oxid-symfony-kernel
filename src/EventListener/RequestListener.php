@@ -44,7 +44,11 @@ class RequestListener
         if(!empty($Match)) {
             $request->attributes->add($Match);
             $response->setStatusCode(200);
+<<<<<<< HEAD
+            $event->setResponse($event->getKernel()->handleOxid($request));
+=======
             $event->getKernel()->handleOxid($request);
+>>>>>>> 5095cf84bef28a67e7bc7eab40fa8755931713e8
         } else {
             $response->setStatusCode(404);
         }

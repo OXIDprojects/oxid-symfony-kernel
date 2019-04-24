@@ -6,6 +6,10 @@
 composer req sioweb/oxid-kernel
 ```
 
+## Was kannst du damit tun?
+
+Alles was Symfony bietet, oder zumindest alles, was die Symfony-Version von Oxid bietet. Die meisten Symfony 3 Komponenten sollten funktionieren, versuche aber bitte nicht, die Oxid-Tabellen mit Entities zu nutzen. Das Oxid-Framework sollte weitgehends verwendet werden, um Daten zu verarbeiten oder zu formatieren. Die machen das schon ganz gut. OxidKernel hat erst dann einen Vorteil, wenn es um Komminikation mit anderen Systemen etc. geht, oder du mit Komposer bestehende Bundles hinzufügen möchtest.
+
 ## Beispiel
 
 Das Modul [sioweb/oxid-api](https://github.com/Sioweb/OxidApi) basiert auf diesem OxidKernel und fügt eine REST-API hinzu, mit der Daten aus Oxid abgegriffen werden können. OxidKernel wird automatisch installiert, wenn `composer req sioweb/oxid-api` ausgeführt wird.

@@ -25,7 +25,7 @@ Bitte `Your\\Namespace` durch den eigenen Namespace ersetzen. Die Verzeichnis-St
 - ROOT/
     - src/
         - OxidKernel
-            Plugin.php
+            - Plugin.php
         - Resources
             - config*
                 - [routing|listener|services].yml

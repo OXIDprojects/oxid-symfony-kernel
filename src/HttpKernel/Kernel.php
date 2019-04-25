@@ -12,9 +12,11 @@ use Sioweb\Oxid\Kernel\Bundle\BundleRoutesInterface;
 
 class Kernel extends HttpKernel
 {
+    private $autoloadetBundles = [];
+
     public function registerBundles()
     {
-        $bundles = [
+        $this->autoloadetBundles = [
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -36,31 +38,49 @@ class Kernel extends HttpKernel
         $loader->load('bundles.yml');
 
         foreach($ContainerBuilder->getExtensionConfig('oxid-kernel')[0]['bundles'] as $bundle) {
-            array_unshift($bundles, new $bundle());
+            array_unshift($this->autoloadetBundles, new $bundle());
         }
 
-        return $bundles;
+        return $this->autoloadetBundles;
     }
 
-    public function getRootDir()
+    public function getProjectDir()
     {
-        return __DIR__;
+        return $_SERVER['DOCUMENT_ROOT'] . '/..';
     }
 
     public function getCacheDir()
     {
-        return dirname(__DIR__).'/../../../../source/tmp/cache/'.$this->getEnvironment();
+        return $this->getProjectDir().'/kernel/var/cache/'.$this->getEnvironment();
     }
 
     public function getLogDir()
     {
-        return dirname(__DIR__).'/../../../../source/log/kernel';
+        return $this->getProjectDir().'/kernel/var/log/'.$this->getEnvironment();
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         // die('<pre>' . print_r($this->getRootDir().'/../Resources/config/config_'.$this->getEnvironment().'.yml', true));
         $loader->load($this->getRootDir().'/../Resources/config/config_'.$this->getEnvironment().'.yml');
+
+        $configDir = $this->getProjectDir() . '/kernel/config';
+        die('<pre>' . print_r($this->autoloadetBundles, true));
+        foreach ($this->autoloadetBundles as $bundle) {
+            $bundle->registerContainerConfiguration($loader, null);
+        }
+
+        // // Reload the parameters.yml file
+        if (file_exists($configDir.'/parameters.yml')) {
+            $loader->load($configDir.'/parameters.yml');
+        }
+
+        if (file_exists($configDir.'/config_'.$this->getEnvironment().'.yml')) {
+            $loader->load($configDir.'/config_'.$this->getEnvironment().'.yml');
+        } elseif (file_exists($configDir.'/config.yml')) {
+            $loader->load($configDir.'/config.yml');
+        }
+
     }
 
     /**
@@ -93,9 +113,7 @@ class Kernel extends HttpKernel
                 $Collection = new RouteCollection();
                 foreach($this->bundles as $bundle) {
                     if($bundle instanceof BundleRoutesInterface) {
-                        $Collection->addCollection($bundle->getRouteCollection(
-                            $this->loader->getResolver(), $this->kernel
-                        ));
+                        $Collection->addCollection($bundle->getRouteCollection($this->loader->getResolver(), $this->kernel));
                     }
                 }
 

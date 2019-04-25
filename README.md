@@ -68,6 +68,20 @@ In der composer.json kann dann angegeben werden, dass die Daten unter `src/Resou
 
 In der Datei `Plugin.php` können Routen und Konfigurationen geladen werden.
 
+### Configuration
+
+Die Config wird weitgehends automatisch eingerichtet. Nach der Installation wird im Root des Shops das Verzeichnis `/kernel/` angelegt. Hier können dann die Symfony-Typischen Configs etc. verwendet werden.
+
+#### parameters.yml & Datenbank?!
+
+Die Datei parameters.yml wird automatisch unter `/kernel/config/parameters.yml` eingerichtet. Sämtliche Einstellungen aus `/source/config.inc.php` werden in lowercase übernommen und gespeichert.
+
+Datenbank-Parameter werden automatisch in Symfonykonforme Namen umgewandelt.
+
+#### Eigene Configs?
+
+Unter `/kernel/config/` kann die Datei `config_prod.yml` angelegt werden. OxidKernel lädt diese dann nach. Später wird vermutlich auch eine `config_dev.yml` möglich sein. Bis auf weiteres, gibt es allerdings nur die 'prod'-Environment.
+
 ### Aber was ist mit den Oxid-Routen?
 
 OxidKernel wird den regulären Betrieb nicht stören. Ein Eventlistener prüft zunächst, ob eine Route überhaupt in einer YAML-Datei hinterlegt wurde und ob diese geladen werden kann. Sollte die Route nicht gefunden werden, wird Oxid alles weitere Überlassen. Daher würde ich vorschlagen, dass die Routen sich besser nicht mit den Kategorien in Oxid überschneiden.

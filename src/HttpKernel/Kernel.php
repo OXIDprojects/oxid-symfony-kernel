@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
     {
         $this->autoloadetBundles = [
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Sioweb\Oxid\Kernel\OxidKernelBundle(),
@@ -38,7 +39,7 @@ class Kernel extends HttpKernel
         $loader->load('bundles.yml');
 
         foreach($ContainerBuilder->getExtensionConfig('oxid-kernel')[0]['bundles'] as $bundle) {
-            array_unshift($this->autoloadetBundles, new $bundle());
+            array_shift($this->autoloadetBundles, new $bundle());
         }
 
         return $this->autoloadetBundles;

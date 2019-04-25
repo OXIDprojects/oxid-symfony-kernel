@@ -61,14 +61,10 @@ class Kernel extends HttpKernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        // die('<pre>' . print_r($this->getRootDir().'/../Resources/config/config_'.$this->getEnvironment().'.yml', true));
+        // die('<pre>' . print_r($_ENV, true));
         $loader->load($this->getRootDir().'/../Resources/config/config_'.$this->getEnvironment().'.yml');
 
         $configDir = $this->getProjectDir() . '/kernel/config';
-        die('<pre>' . print_r($this->autoloadetBundles, true));
-        foreach ($this->autoloadetBundles as $bundle) {
-            $bundle->registerContainerConfiguration($loader, null);
-        }
 
         // // Reload the parameters.yml file
         if (file_exists($configDir.'/parameters.yml')) {

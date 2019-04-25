@@ -45,10 +45,10 @@ class HttpKernel extends \Symfony\Component\HttpKernel\HttpKernel
         // controller arguments
         $arguments = $this->_argumentResolver->getArguments($request, $controller);
 
-        $event = new FilterControllerArgumentsEvent($this, $controller, $arguments, $request, $type);
-        $this->dispatcher->dispatch(KernelEvents::CONTROLLER_ARGUMENTS, $event);
-        $controller = $event->getController();
-        $arguments = $event->getArguments();
+        // $event = new FilterControllerArgumentsEvent($this, $controller, $arguments, $request, $type);
+        // $this->dispatcher->dispatch(KernelEvents::CONTROLLER_ARGUMENTS, $event);
+        // $controller = $event->getController();
+        // $arguments = $event->getArguments();
 
         // call controller
         $response = call_user_func_array($controller, $arguments);

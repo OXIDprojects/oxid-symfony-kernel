@@ -25,6 +25,8 @@ use OxidEsales\ComposerPlugin\Installer\PackageInstallerTrigger;
 use OxidEsales\ComposerPlugin\Installer\Package\ModulePackageInstaller;
 use OxidEsales\ComposerPlugin\Installer\Package\AbstractPackageInstaller;
 
+use OxidEsales\Eshop\Core\Config AS OxidConfig;
+
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
     /**
@@ -164,7 +166,75 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $Bundles['oxid-kernel']['bundles'] = $plugins;
 
             $this->filesystem->dumpFile(__DIR__.'/../Resources/config/bundles.yml', Yaml::dump($Bundles));
+
+            
+            define('INSTALLATION_ROOT_PATH', str_replace('/vendor', '', $this->composer->getConfig()->get('vendor-dir')));
+            define('OX_BASE_PATH', INSTALLATION_ROOT_PATH . DIRECTORY_SEPARATOR . 'source' . DIRECTORY_SEPARATOR);
+            define('OX_LOG_FILE', OX_BASE_PATH . 'log' . DIRECTORY_SEPARATOR . 'oxideshop.log');
+            define('OX_OFFLINE_FILE', OX_BASE_PATH . 'offline.html');
+            define('VENDOR_PATH', INSTALLATION_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR);
+
+            require_once OX_BASE_PATH . '/../source/overridablefunctions.php';
+
+            if(file_exists(OX_BASE_PATH . 'config.inc.php')) {
+                $this->mapOxidConfig(OX_BASE_PATH . 'config.inc.php', 'parameters');
+            }
+            // if(file_exists(OX_BASE_PATH . 'config.development.inc.php')) {
+            //     $this->mapOxidConfig(OX_BASE_PATH . 'config.development.inc.php', 'parameters_dev');
+            // }
         }
+    }
+
+    private function mapOxidConfig($ConfigFile, $ParameterFile)
+    {
+        
+            // require_once OX_BASE_PATH . '/../source/oxfunctions.php';
+            $OxidConfig = new \OxidEsales\Eshop\Core\ConfigFile($ConfigFile);
+
+            if(is_array($OxidConfig = $OxidConfig->getVars())) {
+
+                $OxidConfig = array_change_key_case((array)$OxidConfig, CASE_LOWER);
+                $Mapping = [
+                    'database_host' => 'dbHost',
+                    'database_port' => 'dbPort',
+                    'database_user' => 'dbUser',
+                    'database_password' => 'dbPwd',
+                    'database_name' => 'dbName',
+                ];
+                
+                foreach($Mapping as $sParam => $oxParam) {
+                    if(empty($OxidConfig[$sParam])) {
+                        $OxidConfig[$sParam] = $OxidConfig[strtolower($oxParam)];
+                        unset($OxidConfig[strtolower($oxParam)]);
+                    }
+                }
+            
+                if(!file_exists(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml')) {
+                    $this->filesystem->dumpFile(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml', Yaml::dump([
+                        'parameters' => $OxidConfig
+                    ]));
+                } else {
+                    $ContainerBuilder = new ContainerBuilder();
+                    $Extension = new \Sioweb\Oxid\Kernel\Extension\Extension();
+                    $Extension->getConfiguration([], $ContainerBuilder);
+                    $ContainerBuilder->registerExtension($Extension);
+                    
+                    $loader = new YamlFileLoader(
+                        $ContainerBuilder,
+                        new FileLocator(INSTALLATION_ROOT_PATH.'/kernel/config')
+                    );
+        
+                    $loader->load($ParameterFile . '.yml');
+
+                    $Parameters = [
+                        'parameters' => array_merge(
+                            $OxidConfig,
+                            $ContainerBuilder->getParameterBag()->all()
+                        )
+                    ];
+                    $this->filesystem->dumpFile(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml', Yaml::dump($Parameters));
+                }
+            }
     }
 
     /**

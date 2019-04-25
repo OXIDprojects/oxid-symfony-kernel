@@ -1,0 +1,7 @@
+parameters:
+    database_host: localhost
+    database_port: 3306
+    database_user: "%env(MYSQL_USER)%"
+    database_password: "%env(MYSQL_PASSWORD)%"
+    database_name: "%env(MYSQL_DATABASE)%"
+    kernel.secret: ThisIsVerySecret!

@@ -5,4 +5,4 @@ services:
             - "@service_container"
             - "@sioweb.oxid.kernel.bundles"
         tags:
-            - { name: kernel.event_listener, event: kernel.request, priority: 999 }
+            - { name: kernel.event_listener, event: kernel.request, priority: 900 }

@@ -1,5 +1,9 @@
 # OxidKernel
 
+## Alpha-Release
+
+**Hinweis:** Dieses Modul befindet sich in der Entwicklung. Benutz es besser noch nicht ohne Rücksprache.
+
 ## Installation
 
 ```

@@ -23,17 +23,11 @@ class RequestListener
         $this->routeLoader = $routeLoader;
     }
 
-    public function onKernelRequest(KernelEvent $event)
+    public function onKernelRequestBefore(KernelEvent $event)
     {
-        $response = new Response();
-        $event->setResponse($response);
-
         $Routes = $this->routeLoader->getRoutes();
 
         $request = $event->getRequest();
-        $request->attributes->add([
-            '_controller' => '1',
-        ]);
         
         $context = new RequestContext();
         $context->fromRequest(Request::createFromGlobals());
@@ -43,11 +37,29 @@ class RequestListener
 
         if(!empty($Match)) {
             $request->attributes->add($Match);
+        }
+    }
+
+    public function onKernelRequestAfter(KernelEvent $event)
+    {
+        $response = new Response();
+        $event->setResponse($response);
+
+        $Routes = $this->routeLoader->getRoutes();
+
+        $request = $event->getRequest();
+        
+        $context = new RequestContext();
+        $context->fromRequest(Request::createFromGlobals());
+        $matcher = new UrlMatcher($Routes, $context);
+
+        $Match = $matcher->checkRoute($request);
+
+        if(!empty($Match)) {
             $response->setStatusCode(200);
             $event->setResponse($event->getKernel()->handleOxid($request));
         } else {
             $response->setStatusCode(404);
         }
-
     }
 }

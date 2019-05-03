@@ -58,23 +58,3 @@ monolog:
                 VERBOSITY_VERY_VERBOSE: NOTICE
                 VERBOSITY_DEBUG: DEBUG
             channels: ['doctrine']
-
-security:
-    providers:
-        webservice:
-            id: sioweb.api.security.user.provider
-
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
-            pattern: '^/api'
-            anonymous: true
-            logout: true
-            guard:
-                authenticators: 
-                    # - "@sioweb.api.security.tokenauthenticator"
-                    # - Sioweb\Oxid\Api\Security\TokenAuthenticator
-                    - sioweb.api.security.tokenauthenticator

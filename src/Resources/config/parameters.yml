@@ -5,3 +5,10 @@ parameters:
     database_password: null
     database_name: null
     kernel.secret: ThisIsVerySecret!
+    whitelisted_ip_addresses: []
+        # - ::1
+        # - 127.0.0.1
+    apiusers:
+        sioweb:
+            name: "Sioweb"
+            pass: asdf

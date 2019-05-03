@@ -11,7 +11,7 @@ class ShopControl extends ShopControl_parent
     public function start($controllerKey = null, $function = null, $parameters = null, $viewsChain = null)
     {
         if(!empty($_GET['cl'])) {
-            parent::start($controllerKey, $function, $parameters, $viewsChain);
+            return parent::start($controllerKey, $function, $parameters, $viewsChain);
         }
 
         $_GET = array_merge($_GET, [

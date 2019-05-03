@@ -10,22 +10,22 @@ class ShopControl extends ShopControl_parent
 {
     public function start($controllerKey = null, $function = null, $parameters = null, $viewsChain = null)
     {
+        $_GET = array_merge($_GET, [
+            '_controller' => 1
+        ]);
+
         if(!empty($_GET['cl'])) {
             return parent::start($controllerKey, $function, $parameters, $viewsChain);
         }
 
-        $_GET = array_merge($_GET, [
-            '_controller' => '-1'
-        ]);
-
-        // Debug::enable(E_ERROR);
+        Debug::enable(E_ERROR);
         Request::enableHttpMethodParameterOverride();
         $kernel = new Kernel('prod', false);
     
         $request = Request::createFromGlobals();
         $response = $kernel->handle($request);
         $responseStatusCode = $response->getStatusCode();
-
+        
         if($responseStatusCode !== 404) {
             $response->send();
             $kernel->terminate($request, $response);

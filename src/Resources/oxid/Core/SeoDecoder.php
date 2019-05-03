@@ -18,7 +18,7 @@ class SeoDecoder extends SeoDecoder_parent
     public function processSeoCall($sRequest = null, $sPath = null)
     {
         $_controller = Request::createFromGlobals()->query->get('_controller');
-        if(!empty($_controller) && $_controller != 1) {
+        if(!empty($_controller) && $_controller != 1 && $_controller != -1) {
             return;
         }
 

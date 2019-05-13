@@ -32,8 +32,6 @@ Bitte `Your\\Namespace` durch den eigenen Namespace ersetzen. Die Verzeichnis-St
 
 - ROOT/
     - src/
-        - Kernel/
-            - Plugin.php
         - Resources/
             - config*
                 - [routing|listener|services].yml

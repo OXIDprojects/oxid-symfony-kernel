@@ -2,7 +2,7 @@
 
 ## Beta-Release
 
-**Hinweis:** Dieses Modul befindet sich in der Entwicklung. Benutz es besser noch nicht ohne Rücksprache, fühl dich allerdings frei das Modul zu testen, am besten mit `composer req sioweb/oxid-api`. Lies dir dazu bitte auch die [README der API](https://github.com/Sioweb/OxidApi) durch.
+**Hinweis:** Dieses Modul befindet sich in der Entwicklung. Benutz es besser noch nicht ohne Rücksprache, fühl dich allerdings frei das Modul zu testen, am Besten mit `composer req sioweb/oxid-api`. Lies dir dazu bitte auch die [README der API](https://github.com/Sioweb/OxidApi) durch.
 
 ## Installation
 

@@ -5,6 +5,8 @@ namespace Sioweb\Oxid\Kernel\Legacy\Core;
 use Sioweb\Oxid\Kernel\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
+use OxidEsales\Eshop\Core\Registry;
+
 
 class ShopControl extends ShopControl_parent
 {
@@ -22,6 +24,7 @@ class ShopControl extends ShopControl_parent
         Request::enableHttpMethodParameterOverride();
         $kernel = new Kernel('prod', false);
     
+        $kernel->setProjectRoot(Registry::getConfig()->getConfigParam('sShopDir'));
         $request = Request::createFromGlobals();
         $response = $kernel->handle($request);
         $responseStatusCode = $response->getStatusCode();

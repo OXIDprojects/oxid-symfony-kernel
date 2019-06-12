@@ -99,9 +99,14 @@ class Kernel extends BaseKernel
         return $this->autoloadetBundles;
     }
 
+    public function setProjectRoot($dir)
+    {
+        $this->projectDir = rtrim($dir, '/') . '/..';
+    }
+
     public function getProjectDir()
     {
-        return $_SERVER['DOCUMENT_ROOT'] . '/..';
+        return $this->projectDir;
     }
 
     public function getCacheDir()

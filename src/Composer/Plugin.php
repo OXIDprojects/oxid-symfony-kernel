@@ -151,9 +151,17 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $Extension->getConfiguration($Config, $ContainerBuilder);
             $ContainerBuilder->registerExtension($Extension);
 
+            
+            $FileLocator = new FileLocator(__DIR__.'/../Resources/config');
+            try {
+                $FileLocator->locate('bundles.yml');
+            } catch(\Exception $e) {
+                $this->filesystem->dumpFile(__DIR__.'/../Resources/config/bundles.yml', Yaml::dump(['oxid-kernel' => ['bundles' => []]]));
+            }
+
             $loader = new YamlFileLoader(
                 $ContainerBuilder,
-                new FileLocator(__DIR__.'/../Resources/config')
+                $FileLocator
             );
     
             $loader->load('bundles.yml');

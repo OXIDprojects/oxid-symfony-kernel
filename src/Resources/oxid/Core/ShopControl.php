@@ -13,6 +13,12 @@ class ShopControl extends ShopControl_parent
     public function start($controllerKey = null, $function = null, $parameters = null, $viewsChain = null)
     {
         $_GET = array_merge($_GET, [
+            '_controller' => 'sShopDir'
+        ]);
+        
+        $sShopDir = Registry::getConfig()->getConfigParam('sShopDir');
+        
+        $_GET = array_merge($_GET, [
             '_controller' => 1
         ]);
 
@@ -24,7 +30,7 @@ class ShopControl extends ShopControl_parent
         Request::enableHttpMethodParameterOverride();
         $kernel = new Kernel('prod', false);
     
-        $kernel->setProjectRoot(Registry::getConfig()->getConfigParam('sShopDir'));
+        $kernel->setProjectRoot($sShopDir);
         $request = Request::createFromGlobals();
         $response = $kernel->handle($request);
         $responseStatusCode = $response->getStatusCode();

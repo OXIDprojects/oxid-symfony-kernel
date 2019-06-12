@@ -48,10 +48,44 @@ class Kernel extends BaseKernel
 
         $loader->load('bundles.yml');
 
-        foreach($ContainerBuilder->getExtensionConfig('oxid-kernel')[0]['bundles'] as $bundle) {
+        $class2Alias = [];
+        $loadBefore = [];
+
+        $arrBundles = $ContainerBuilder->getExtensionConfig('oxid-kernel')[0]['bundles'];
+        foreach($arrBundles as &$bundle) {
             $bundle = new $bundle();
+            if(empty($loadBefore[get_class($bundle)])) {
+                $loadBefore[get_class($bundle)] = 0;
+            }
+            $loadBefore[get_class($bundle)]++;
+
+            if(method_exists($bundle, 'loadBefore')) {
+                foreach ($bundle->loadBefore() as $className) {
+                    if(empty($loadBefore[$className])) {
+                        $loadBefore[$className] = 0;
+                    }
+                    $loadBefore[$className]++;
+                }
+            }
+        }
+
+        
+        asort($loadBefore);
+
+        foreach($arrBundles as $bundleClass) {
+            $loadBefore[get_class($bundleClass)] = $bundleClass;
+        }
+        unset($bundle);
+        unset($arrBundles);
+
+        foreach($loadBefore as $bundle) {
+            if(!is_object($bundle)) {
+                continue;
+            }
             $this->autoloadetBundles[$bundle->getContainerExtension()->getAlias()] = $bundle;
         }
+
+        unset($loadBefore);
 
         return $this->autoloadetBundles;
     }

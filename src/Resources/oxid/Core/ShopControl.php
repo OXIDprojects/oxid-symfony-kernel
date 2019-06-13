@@ -12,25 +12,19 @@ class ShopControl extends ShopControl_parent
 {
     public function start($controllerKey = null, $function = null, $parameters = null, $viewsChain = null)
     {
-        $_GET = array_merge($_GET, [
-            '_controller' => 'sShopDir'
-        ]);
-        
-        $sShopDir = Registry::getConfig()->getConfigParam('sShopDir');
-        
-        $_GET = array_merge($_GET, [
-            '_controller' => 1
-        ]);
-
         if(!empty($_GET['cl'])) {
             return parent::start($controllerKey, $function, $parameters, $viewsChain);
         }
+        
+        $_GET['_controller'] = 1;
 
-        Debug::enable(E_ERROR);
+        // Debug::enable(E_ERROR);
         Request::enableHttpMethodParameterOverride();
         $kernel = new Kernel('prod', false);
+
+
     
-        $kernel->setProjectRoot($sShopDir);
+        $kernel->setProjectRoot('/' . trim(__DIR__, 'source/modules/sioweb/Kernel/Core'));
         $request = Request::createFromGlobals();
         $response = $kernel->handle($request);
         $responseStatusCode = $response->getStatusCode();

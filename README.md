@@ -10,7 +10,7 @@ composer req sioweb/oxid-kernel
 
 ### Modul aktivieren
 
-Aktiviere das Modul <b style="color: #005ba9">Sioweb</b>` | Oxid Kernel` im Backend unter `Erweiterungen > Module`.
+Aktiviere das Modul `Sioweb | Oxid Kernel` im Backend unter `Erweiterungen > Module`.
 
 ### Modul Reihenfolge
 

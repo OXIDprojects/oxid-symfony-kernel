@@ -1,14 +1,30 @@
 # OxidKernel
 
-## Beta-Release
-
-**Hinweis:** Dieses Modul befindet sich in der Entwicklung. Benutz es besser noch nicht ohne Rücksprache, fühl dich allerdings frei das Modul zu testen, am Besten mit `composer req sioweb/oxid-api`. Lies dir dazu bitte auch die [README der API](https://github.com/Sioweb/OxidApi) durch.
-
 ## Installation
 
-```
+Falls nicht schon gesehen, installiere [Composer](https://getcomposer.org/download/) auf deinen Rechner. Öffne die Konsole im Root von Oxid und führe folgenden Befehl aus:
+
+```sh
 composer req sioweb/oxid-kernel
 ```
+
+### Modul aktivieren
+
+Aktiviere das Modul <b style="color: #005ba9">Sioweb</b>` | Oxid Kernel` im Backend unter `Erweiterungen > Module`.
+
+### Modul Reihenfolge
+
+Damit Kernel funktioniert musst die Ladereihenfolge korrekt eingerichtet sein. Öffne den Tap `Installierte Shop-Module` unter `Erweiterungen > Module` und suche den Eintrag `Sioweb\Oxid\Kernel\Legacy\Core\ShopControl`. Sollten noch weitere `\ShopControl` Einträge vorhanden sein, verschiebe `Sioweb\Oxid\Kernel\Legacy\Core\ShopControl` an das Ende der ShopControl-Liste.
+
+**Tip:** Mit `STRG + F` (`CMD + F` für Mac) kann `ShopControl` besser gesucht werden.
+
+### Mögliche Probleme
+
+*Falsch benannte Klassennamen.* Es kann durchaus passieren, dass Module die Klasse `ShopControl` klein schreiben, oder gänzlich unterschiedlich benannt haben. Auch diese Klassen müssen in der Ladereihenfolge vor dem Kernel positioniert werden.
+
+*Nach installation eines Modules läuft Oxid Kernel nicht mehr.* Denn dass neue Modul nutzt vermutlich auch die Klasse `ShopControl` und die Ladereihenfolge muss angepasst werden.
+
+**Hinweis:** Eine automatische Ladereihenfolge steht auf der Todo-Liste.
 
 ## Was kannst du damit tun?
 

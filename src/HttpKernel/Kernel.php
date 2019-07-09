@@ -101,7 +101,7 @@ class Kernel extends BaseKernel
 
     public function setProjectRoot($dir)
     {
-        $this->projectDir = rtrim($dir, '/') . '/..';
+        $this->projectDir = rtrim($dir, '/');
     }
 
     public function getProjectDir()

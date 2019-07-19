@@ -26,7 +26,6 @@ class Kernel extends BaseKernel
     {
         $autoloadetBundles = [
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Sioweb\Oxid\Kernel\OxidKernelBundle(),

@@ -132,15 +132,27 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $plugins = [];
         $Packages = $this->composer->getRepositoryManager()->getLocalRepository();
         foreach($Packages->getPackages() as $package) {
-            foreach ($this->getPluginClasses($package) as $name => $class) {
-                if (!class_exists($class)) {
-                    $io->write(' - Class not found for '.$name, true, IOInterface::VERY_VERBOSE);
-                //     throw new \RuntimeException(sprintf('The plugin class "%s" was not found.', $class));
+            foreach ($this->getPluginClasses($package) as $name => $classes) {
+                if(!is_array($classes)) {
+                    $classes = [$classes];
                 }
 
-                $io->write(' - Added plugin for '.$name, true, IOInterface::VERY_VERBOSE);
+                foreach($classes as $customname => $class) {
+                    if (!class_exists($class)) {
+                        $io->write(' - Class not found for '.$name, true, IOInterface::VERY_VERBOSE);
+                    //     throw new \RuntimeException(sprintf('The plugin class "%s" was not found.', $class));
+                    }
 
-                $plugins[$name] = $class;
+                    $io->write(' - Added plugin for '.$name, true, IOInterface::VERY_VERBOSE);
+
+                    if(empty($plugins[$name])) {
+                        $plugins[$name] = $class;
+                    } elseif(!is_numeric($customname)) {
+                        $plugins[$customname] = $class;
+                    } else {
+                        $plugins[$name . '.' . $customname] = $class;
+                    }
+                }
             }
         }
 

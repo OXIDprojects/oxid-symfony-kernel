@@ -23,7 +23,8 @@
         "symfony/framework-bundle": "^3.0",
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "^2.0",
-        "symfony/monolog-bundle": "^2"
+        "symfony/monolog-bundle": "^2",
+        "oxid-esales/oxideshop-composer-plugin": "^2"
     },
     "require-dev": {
         "ext-zip": "*",

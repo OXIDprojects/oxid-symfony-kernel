@@ -42,11 +42,17 @@ class Kernel extends BaseKernel
         $Extension->getConfiguration($Config, $ContainerBuilder);
         $ContainerBuilder->registerExtension($Extension);
 
-        $FileLocator = new FileLocator(__DIR__.'/../Resources/config');
+        $path = $_SERVER['DOCUMENT_ROOT'] . 'src/Resources/config/';
+
+        if (!is_dir($path)) {
+            $path = __DIR__.'/../Resources/config';
+        }
+
+        $FileLocator = new FileLocator($path);
         try {
             $FileLocator->locate('bundles.yml');
         } catch(\Exception $e) {
-            (new Filesystem())->dumpFile(__DIR__.'/../Resources/config/bundles.yml', Yaml::dump(['oxid-kernel' => ['bundles' => []]]));
+            (new Filesystem())->dumpFile("$path/bundles.yml", Yaml::dump(['oxid-kernel' => ['bundles' => []]]));
         }
 
         $loader = new YamlFileLoader(

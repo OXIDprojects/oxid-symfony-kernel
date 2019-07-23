@@ -1,0 +1,60 @@
+imports:
+    - { resource: parameters.yml }
+
+framework:
+    router:
+        resource: "sioweb.oxid.kernel.bundles:getRoutes"
+        type: service
+        strict_requirements: "%kernel.debug%"
+
+
+# Doctrine configuration
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver: pdo_mysql
+                host: "%database_host%"
+                port: "%database_port%"
+                user: "%database_user%"
+                password: "%database_password%"
+                dbname: "%database_name%"
+                charset: utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+                    engine: InnoDB
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        auto_mapping: true
+        # types:
+        #     binary_string:
+        #         class: "Contao\\CoreBundle\\Doctrine\\DBAL\\Types\\BinaryStringType"
+        #         commented: true
+
+
+# Monolog configuration
+monolog:
+    handlers:
+        main:
+            type: rotating_file
+            max_files: 10
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+            channels: ['!doctrine', '!event', '!php']
+        console:
+            type: console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: INFO
+                VERBOSITY_VERY_VERBOSE: DEBUG
+            channels: ['!doctrine']
+        console_very_verbose:
+            type: console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: NOTICE
+                VERBOSITY_VERY_VERBOSE: NOTICE
+                VERBOSITY_DEBUG: DEBUG
+            channels: ['doctrine']

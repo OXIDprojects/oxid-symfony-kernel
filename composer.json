@@ -1,0 +1,56 @@
+{
+    "name": "sioweb/oxid-kernel",
+    "description": "Symfony kernel for oxid",
+    "type": "composer-plugin",
+    "authors": [
+        {
+            "name": "Sascha Weidner",
+            "email": "support@sioweb.de"
+        }
+    ],
+    "keywords": [
+        "oxid",
+        "kernel"
+    ],
+    "homepage": "https://github.com/sioweb/oxidkernel",
+    "license": "GPL-3.0-only",
+    "require": {
+        "php": "^7.0",
+        "composer-plugin-api": "^1.1",
+        "symfony/routing": "^3.2",
+        "symfony/http-kernel": "^3.2",
+        "symfony/class-loader": "^3.4",
+        "symfony/framework-bundle": "^3.0",
+        "doctrine/doctrine-bundle": "*",
+        "doctrine/orm": "^2.0",
+        "symfony/monolog-bundle": "^2",
+        "symfony/security-bundle": "~3.1.0",
+        "oxid-esales/oxideshop-composer-plugin": "^2",
+        "symfony/yaml": "^2.8"
+    },
+    "require-dev": {
+        "ext-zip": "*",
+        "composer/composer": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sioweb\\Oxid\\Kernel\\Legacy\\": "../../../source/modules/sioweb/Kernel",
+            "Sioweb\\Oxid\\Kernel\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "src/Resources/oxid"
+        ]
+    },
+    "extra": {
+        "oxideshop": {
+          "blacklist-filter": [
+            "documentation/**/*.*"
+          ],
+          "source-directory": "src/Resources/oxid",
+          "target-directory": "sioweb/Kernel"
+        },
+        "class": [
+            "Sioweb\\Oxid\\Kernel\\Composer\\Plugin"
+        ]
+    }
+}

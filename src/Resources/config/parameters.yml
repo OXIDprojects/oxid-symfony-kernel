@@ -1,0 +1,14 @@
+parameters:
+    database_host: localhost
+    database_port: 3306
+    database_user: null
+    database_password: null
+    database_name: null
+    kernel.secret: ThisIsVerySecret!
+    whitelisted_ip_addresses: []
+        # - ::1
+        # - 127.0.0.1
+    apiusers:
+        sioweb:
+            name: "Sioweb"
+            pass: asdf

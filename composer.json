@@ -1,5 +1,5 @@
 {
-    "name": "sioweb/oxid-kernel",
+    "name": "oxidcommunity/symfony-kernel",
     "description": "Symfony kernel for oxid",
     "type": "composer-plugin",
     "authors": [
@@ -10,9 +10,10 @@
     ],
     "keywords": [
         "oxid",
+        "symfony",
         "kernel"
     ],
-    "homepage": "https://github.com/sioweb/oxidkernel",
+    "homepage": "https://github.com/OXIDprojects/oxid-symfony-kernel",
     "license": "GPL-3.0-only",
     "require": {
         "php": "^7.0",
@@ -34,8 +35,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Sioweb\\Oxid\\Kernel\\Legacy\\": "../../../source/modules/sioweb/Kernel",
-            "Sioweb\\Oxid\\Kernel\\": "src/"
+            "OxidCommunity\\SymfonyKernel\\Legacy\\": "../../../source/modules/oxidcommunity/SymfonyKernel",
+            "OxidCommunity\\SymfonyKernel\\": "src/"
         },
         "exclude-from-classmap": [
             "src/Resources/oxid"
@@ -43,14 +44,11 @@
     },
     "extra": {
         "oxideshop": {
-          "blacklist-filter": [
-            "documentation/**/*.*"
-          ],
           "source-directory": "src/Resources/oxid",
-          "target-directory": "sioweb/Kernel"
+          "target-directory": "oxidcommunity/SymfonyKernel"
         },
         "class": [
-            "Sioweb\\Oxid\\Kernel\\Composer\\Plugin"
+            "OxidCommunity\\SymfonyKernel\\Composer\\Plugin"
         ]
     }
 }

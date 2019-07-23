@@ -5,16 +5,16 @@
 Falls nicht schon gesehen, installiere [Composer](https://getcomposer.org/download/) auf deinen Rechner. Öffne die Konsole im Root von Oxid und führe folgenden Befehl aus:
 
 ```sh
-composer req sioweb/oxid-kernel
+composer require oxid-community/symfony-kernel
 ```
 
 ### Modul aktivieren
 
-Aktiviere das Modul `Sioweb | Oxid Kernel` im Backend unter `Erweiterungen > Module`.
+Aktiviere das Modul `Symfony Kernel` im Backend unter `Erweiterungen > Module`.
 
 ### Modul Reihenfolge
 
-Damit Kernel funktioniert musst die Ladereihenfolge korrekt eingerichtet sein. Öffne den Tap `Installierte Shop-Module` unter `Erweiterungen > Module` und suche den Eintrag `Sioweb\Oxid\Kernel\Legacy\Core\ShopControl`. Sollten noch weitere `\ShopControl` Einträge vorhanden sein, verschiebe `Sioweb\Oxid\Kernel\Legacy\Core\ShopControl` an das Ende der ShopControl-Liste.
+Damit Kernel funktioniert musst die Ladereihenfolge korrekt eingerichtet sein. Öffne den Tap `Installierte Shop-Module` unter `Erweiterungen > Module` und suche den Eintrag `OxidCommunity\SymfonyKernel\Legacy\Core\ShopControl`. Sollten noch weitere `\ShopControl` Einträge vorhanden sein, verschiebe `OxidCommunity\SymfonyKernel\Legacy\Core\ShopControl` an das Ende der ShopControl-Liste.
 
 **Tip:** Mit `STRG + F` (`CMD + F` für Mac) kann `ShopControl` besser gesucht werden.
 
@@ -69,7 +69,7 @@ In der composer.json kann dann angegeben werden, dass die Daten unter `src/Resou
             "documentation/**/*.*"
         ],
         "source-directory": "./src/Resources/oxid",
-        "target-directory": "sioweb/Api"
+        "target-directory": "VENDOR NAME/PLUGIN NAME"
     },
     "oxid-kernel-plugin": "Your\\Namespace\\PluginName\\YourNamespacePluginNameBundle"
 },

@@ -1,5 +1,5 @@
 {
-    "name": "oxidcommunity/symfony-kernel",
+    "name": "oxid-community/symfony-kernel",
     "description": "Symfony kernel for oxid",
     "type": "composer-plugin",
     "authors": [

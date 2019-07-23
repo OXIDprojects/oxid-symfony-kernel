@@ -1,11 +1,11 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel;
+namespace OxidCommunity\SymfonyKernel;
 
-use Sioweb\Oxid\Kernel\Extension\Extension;
-use Sioweb\Oxid\Kernel\DependencyInjection\ContainerBuilder;
+use OxidCommunity\SymfonyKernel\Extension\Extension;
+use OxidCommunity\SymfonyKernel\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle AS BaseBundle;
-use Sioweb\Oxid\Kernel\Bundle\BundleConfigurationInterface;
+use OxidCommunity\SymfonyKernel\Bundle\BundleConfigurationInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder as BaseContainerBuilder;
 
 /**

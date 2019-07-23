@@ -1,16 +1,16 @@
 services:
-    sioweb.oxid.kernel.listener.request.before:
-        class: Sioweb\Oxid\Kernel\EventListener\RequestListener
+    oxidcommunity.symfonykernel.listener.request.before:
+        class: OxidCommunity\SymfonyKernel\EventListener\RequestListener
         arguments:
             - "@service_container"
-            - "@sioweb.oxid.kernel.bundles"
+            - "@oxidcommunity.symfonykernel.bundles"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequestBefore, priority: 999 }
 
-    sioweb.oxid.kernel.listener.request.after:
-        class: Sioweb\Oxid\Kernel\EventListener\RequestListener
+    oxidcommunity.symfonykernel.listener.request.after:
+        class: OxidCommunity\SymfonyKernel\EventListener\RequestListener
         arguments:
             - "@service_container"
-            - "@sioweb.oxid.kernel.bundles"
+            - "@oxidcommunity.symfonykernel.bundles"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequestAfter, priority: 800 }

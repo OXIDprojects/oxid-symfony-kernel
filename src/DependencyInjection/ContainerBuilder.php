@@ -10,10 +10,10 @@ declare(strict_types=1);
  * @license LGPL-3.0-or-later
  */
 
-namespace Sioweb\Oxid\Kernel\DependencyInjection;
+namespace OxidCommunity\SymfonyKernel\DependencyInjection;
 
-use Sioweb\Oxid\Kernel\Bundle\BundleConfigurationInterface;
-// use Sioweb\Oxid\Kernel\DependencyInjection\Compiler\Compiler;
+use OxidCommunity\SymfonyKernel\Bundle\BundleConfigurationInterface;
+// use OxidCommunity\SymfonyKernel\DependencyInjection\Compiler\Compiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder as BaseContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 

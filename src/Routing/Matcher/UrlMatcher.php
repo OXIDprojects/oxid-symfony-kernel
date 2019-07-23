@@ -1,6 +1,6 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\Routing\Matcher;
+namespace OxidCommunity\SymfonyKernel\Routing\Matcher;
 
 use Symfony\Component\HttpFoundation\Request;
 

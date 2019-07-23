@@ -6,18 +6,10 @@
 
 declare (strict_types = 1);
 
-namespace Sioweb\Oxid\Kernel\Extension;
+namespace OxidCommunity\SymfonyKernel\Extension;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-
-/**
- * @file Configuration.php
- * @class Configuration
- * @author Sascha Weidner
- * @package sioweb.contao.extensions.glossar
- * @copyright Sascha Weidner, Sioweb
- */
 
 class Configuration implements ConfigurationInterface
 {

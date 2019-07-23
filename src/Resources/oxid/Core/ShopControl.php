@@ -1,8 +1,8 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\Legacy\Core;
+namespace OxidCommunity\SymfonyKernel\Legacy\Core;
 
-use Sioweb\Oxid\Kernel\HttpKernel\Kernel;
+use OxidCommunity\SymfonyKernel\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShopControl extends ShopControl_parent
@@ -23,7 +23,7 @@ class ShopControl extends ShopControl_parent
         Request::enableHttpMethodParameterOverride();
         $kernel = new Kernel('prod', false);
 
-        $kernel->setProjectRoot(trim(preg_replace('|\\\|is', '/', __DIR__), 'source/modules/sioweb/Kernel/Core'));
+        $kernel->setProjectRoot(trim(preg_replace('|\\\|is', '/', __DIR__), 'source/modules/oxid-community\SymfonyKernel/Core'));
         $request = Request::createFromGlobals();
         $response = $kernel->handle($request);
         $responseStatusCode = $response->getStatusCode();

@@ -11,31 +11,20 @@ $sMetadataVersion = '2.0';
  * Module information
  */
 $aModule = [
-    'id' => 'SiowebOxidKernel',
-    'title' => '<i></i><b style="color: #005ba9">Sioweb</b> | Oxid Kernel',
+    'id' => 'OxidCommunitySymfonyKernel',
+    'title' => 'Symfony Kernel',
     'description' => '.',
     'version' => '1.0',
-    'url' => 'https://www.sioweb.de',
-    'email' => 'support@sioweb.com',
+    'url' => 'https://github.com/OXIDprojects/oxid-symfony-kernel',
     'author' => 'Sascha Weidner',
     'extend' => [
         \OxidEsales\Eshop\Core\ShopControl::class =>
-            Sioweb\Oxid\Kernel\Legacy\Core\ShopControl::class,
+            OxidCommunity\SymfonyKernel\Legacy\Core\ShopControl::class,
         \OxidEsales\Eshop\Core\SeoDecoder::class =>
-            Sioweb\Oxid\Kernel\Legacy\Core\SeoDecoder::class,
+            OxidCommunity\SymfonyKernel\Legacy\Core\SeoDecoder::class,
     ],
     'events' => [
-        'onActivate' => '\Sioweb\Oxid\Kernel\Legacy\Core\Events::onActivate',
-        'onDeactivate' => '\Sioweb\Oxid\Kernel\Legacy\Core\Events::onDeactivate',
-    ],
-    // 'templates' => [
-    //     'formbuilder_shop_main.tpl' => 'sioweb/Backend/views/admin/tpl/form/formbuilder_shop_main.tpl',
-    // ],
-    // 'blocks' => [
-    //     [
-    //         'template' => 'headitem.tpl',
-    //         'block' => 'admin_headitem_inccss',
-    //         'file' => 'admin_headitem_inccss.tpl',
-    //     ],
-    // ]
+        'onActivate' => '\OxidCommunity\SymfonyKernel\Legacy\Core\Events::onActivate',
+        'onDeactivate' => '\OxidCommunity\SymfonyKernel\Legacy\Core\Events::onDeactivate',
+    ]
 ];

@@ -1,21 +1,21 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\HttpKernel;
+namespace OxidCommunity\SymfonyKernel\HttpKernel;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
-use Sioweb\Oxid\Kernel\DependencyInjection\ContainerBuilder;
+use OxidCommunity\SymfonyKernel\DependencyInjection\ContainerBuilder;
 // use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel AS BaseKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Sioweb\Oxid\Kernel\Bundle\BundleRoutesInterface;
-use Sioweb\Oxid\Kernel\Bundle\BundleConfigurationInterface;
+use OxidCommunity\SymfonyKernel\Bundle\BundleRoutesInterface;
+use OxidCommunity\SymfonyKernel\Bundle\BundleConfigurationInterface;
 use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use Sioweb\Oxid\Kernel\DependencyInjection\Compiler\MergeExtensionConfigurationPass;
+use OxidCommunity\SymfonyKernel\DependencyInjection\Compiler\MergeExtensionConfigurationPass;
 
 
 class Kernel extends BaseKernel
@@ -28,7 +28,7 @@ class Kernel extends BaseKernel
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Sioweb\Oxid\Kernel\OxidKernelBundle(),
+            new \OxidCommunity\SymfonyKernel\OxidKernelBundle(),
         ];
 
         foreach($autoloadetBundles as $bundle) {
@@ -38,7 +38,7 @@ class Kernel extends BaseKernel
         $Config = [];
 
         $ContainerBuilder = new ContainerBuilder();
-        $Extension = new \Sioweb\Oxid\Kernel\Extension\Extension();
+        $Extension = new \OxidCommunity\SymfonyKernel\Extension\Extension();
         $Extension->getConfiguration($Config, $ContainerBuilder);
         $ContainerBuilder->registerExtension($Extension);
 
@@ -146,7 +146,7 @@ class Kernel extends BaseKernel
         }
 
         // Set the plugin loader again so it is available at runtime (synthetic service)
-        $container->set('sioweb.oxid.kernel.bundles', new Class(
+        $container->set('oxidcommunity.symfonykernel.bundles', new Class(
             $this->getBundles(), $container->get('routing.loader'), $container->get('kernel')
         ) {
             private $loader;

@@ -35,7 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OxidCommunity\\SymfonyKernel\\Legacy\\": "../../../source/modules/oxidcommunity/SymfonyKernel",
+            "OxidCommunity\\SymfonyKernel\\Legacy\\": "../../../source/modules/oxid-community/symfony-kernel",
             "OxidCommunity\\SymfonyKernel\\": "src/"
         },
         "exclude-from-classmap": [
@@ -45,7 +45,7 @@
     "extra": {
         "oxideshop": {
           "source-directory": "src/Resources/oxid",
-          "target-directory": "oxidcommunity/SymfonyKernel"
+          "target-directory": "oxid-community/symfony-kernel"
         },
         "class": [
             "OxidCommunity\\SymfonyKernel\\Composer\\Plugin"

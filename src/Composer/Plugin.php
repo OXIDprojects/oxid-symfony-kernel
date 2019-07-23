@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sioweb\Oxid\Kernel\Composer;
+namespace OxidCommunity\SymfonyKernel\Composer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
@@ -77,16 +77,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $repo = $this->composer->getRepositoryManager()->getLocalRepository();
 
         foreach ($repo->getPackages() as $Package) {
-            if ($Package->getName() === 'sioweb/oxid-kernel') {
+            if ($Package->getName() === 'oxid-community\SymfonyKernel') {
                 $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
                 $SourceDir = $this->formSourcePath($Package);
                 $TargetDir = $this->formTargetPath();
                 if (is_dir($SourceDir)) {
                     if (!is_dir($TargetDir)) {
-                        $io->write('<info>sioweb/oxid-kernel:</info> Oxid kernel will be installed into oxid modules directory.');
+                        $io->write('<info>oxid-community\SymfonyKernel:</info> Oxid kernel will be installed into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     } else {
-                        $io->write('<info>sioweb/oxid-kernel:</info> Oxid kernel will be reintegrated into oxid modules directory.');
+                        $io->write('<info>oxid-community\SymfonyKernel:</info> Oxid kernel will be reintegrated into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     }
                 }
@@ -109,7 +109,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
         // "source-directory": "src/Resources/oxid",
-        // "target-directory": "sioweb/Kernel"
+        // "target-directory": "oxid-community\SymfonyKernel"
         $sourceDirectory = 'src/Resources/oxid';
         $packagePath = $this->packageInstallerTrigger->getInstallPath($Package);
 
@@ -124,7 +124,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected function formTargetPath()
     {
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
-        return Path::join($RootPath, 'modules', 'sioweb/Kernel');
+        return Path::join($RootPath, 'modules', 'oxid-community\SymfonyKernel');
     }
 
     public function addBundles(Event $event): void
@@ -194,7 +194,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         if(!$static && !empty($plugins)) {
             $Config = [];
             $ContainerBuilder = new ContainerBuilder();
-            $Extension = new \Sioweb\Oxid\Kernel\Extension\Extension();
+            $Extension = new \OxidCommunity\SymfonyKernel\Extension\Extension();
             $Extension->getConfiguration($Config, $ContainerBuilder);
             $ContainerBuilder->registerExtension($Extension);
 
@@ -272,7 +272,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                     ]));
                 } else {
                     $ContainerBuilder = new ContainerBuilder();
-                    $Extension = new \Sioweb\Oxid\Kernel\Extension\Extension();
+                    $Extension = new \OxidCommunity\SymfonyKernel\Extension\Extension();
                     $Extension->getConfiguration([], $ContainerBuilder);
                     $ContainerBuilder->registerExtension($Extension);
                     

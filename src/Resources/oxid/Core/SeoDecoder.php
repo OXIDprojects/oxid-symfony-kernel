@@ -1,6 +1,6 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\Legacy\Core;
+namespace OxidCommunity\SymfonyKernel\Legacy\Core;
 
 use Symfony\Component\HttpFoundation\Request;
 

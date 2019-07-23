@@ -1,6 +1,6 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\HttpKernel;
+namespace OxidCommunity\SymfonyKernel\HttpKernel;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\Bundle;
+namespace OxidCommunity\SymfonyKernel\Bundle;
 
-use Sioweb\Oxid\Kernel\DependencyInjection\ContainerBuilder;
+use OxidCommunity\SymfonyKernel\DependencyInjection\ContainerBuilder;
 
 interface BundleConfigurationInterface
 {

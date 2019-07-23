@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sioweb\Oxid\Kernel\DependencyInjection\Compiler;
+namespace OxidCommunity\SymfonyKernel\DependencyInjection\Compiler;
 
-use Sioweb\Oxid\Kernel\Bundle\Extension\OxidKernelExtensionInterface;
+use OxidCommunity\SymfonyKernel\Bundle\Extension\OxidKernelExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder AS BaseContainerBuilder;
-use Sioweb\Oxid\Kernel\DependencyInjection\ContainerBuilder;
+use OxidCommunity\SymfonyKernel\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 

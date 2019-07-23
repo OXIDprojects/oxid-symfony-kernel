@@ -3,7 +3,7 @@ imports:
 
 framework:
     router:
-        resource: "sioweb.oxid.kernel.bundles:getRoutes"
+        resource: "oxidcommunity.symfonykernel.bundles:getRoutes"
         type: service
         strict_requirements: "%kernel.debug%"
 

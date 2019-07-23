@@ -1,11 +1,11 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\EventListener;
+namespace OxidCommunity\SymfonyKernel\EventListener;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
-use Sioweb\Oxid\Kernel\Routing\Matcher\UrlMatcher;
+use OxidCommunity\SymfonyKernel\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
 class RequestListener

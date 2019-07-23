@@ -1,8 +1,8 @@
 <?php
 
-namespace Sioweb\Oxid\Kernel\Bundle\Extension;
+namespace OxidCommunity\SymfonyKernel\Bundle\Extension;
 
-use Sioweb\Oxid\Kernel\DependencyInjection\ContainerBuilder;
+use OxidCommunity\SymfonyKernel\DependencyInjection\ContainerBuilder;
 // use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 interface OxidKernelExtensionInterface

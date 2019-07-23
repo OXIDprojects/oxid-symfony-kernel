@@ -6,21 +6,13 @@
 
 declare (strict_types = 1);
 
-namespace Sioweb\Oxid\Kernel\Extension;
+namespace OxidCommunity\SymfonyKernel\Extension;
 
-use Sioweb\Oxid\Kernel\DependencyInjection\ContainerBuilder;
+use OxidCommunity\SymfonyKernel\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder AS BaseContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension AS BaseExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-
-/**
- * @file Extension.php
- * @class Extension
- * @author Sascha Weidner
- * @package sioweb.contao.extensions.glossar
- * @copyright Sascha Weidner, Sioweb
- */
 
 class Extension extends BaseExtension 
 {

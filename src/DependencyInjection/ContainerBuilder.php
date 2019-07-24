@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace OxidCommunity\SymfonyKernel\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use OxidCommunity\SymfonyKernel\Bundle\BundleConfigurationInterface;
 // use OxidCommunity\SymfonyKernel\DependencyInjection\Compiler\Compiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder as BaseContainerBuilder;
@@ -20,6 +21,15 @@ use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 class ContainerBuilder extends BaseContainerBuilder
 {
     private $autoloadedBundles = [];
+
+    // /**
+    //  * @param ParameterBagInterface $parameterBag A ParameterBagInterface instance
+    //  */
+    // public function __construct(ParameterBagInterface $parameterBag = null)
+    // {
+    //     echo "<pre>" . print_r('NEW ContainerBuilder', true) . "</pre>";
+    //     parent::__construct($parameterBag);
+    // }
 
     public function getBundle($bundle) {
         return $this->autoloadedBundles[$bundle];
@@ -57,10 +67,6 @@ class ContainerBuilder extends BaseContainerBuilder
                 }
             }
 
-            // if($name === 'security') {
-            //     die('<pre>1: ' . print_r($this->extensionConfigs, true));
-            // }
-
             if($this->autoloadedBundles[$name] instanceof BundleConfigurationInterface) {
                 return $this->extensionConfigs;
             }
@@ -94,8 +100,6 @@ class ContainerBuilder extends BaseContainerBuilder
             }
         }
 
-        $compiler->compile($this);
-
         if ($this->trackResources) {
             foreach ($this->definitions as $definition) {
                 if ($definition->isLazy() && ($class = $definition->getClass()) && class_exists($class)) {
@@ -103,9 +107,11 @@ class ContainerBuilder extends BaseContainerBuilder
                 }
             }
         }
+        
+        $compiler->compile($this);
 
         $this->extensionConfigs = array();
-
-        parent::compile();
+        /** Do not run parent compile; This will cause 'Unable to register extension "..." as it is already registered' */
+        // parent::compile($this);
     }
 }

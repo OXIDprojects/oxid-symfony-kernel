@@ -244,54 +244,53 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     private function mapOxidConfig($ConfigFile, $ParameterFile)
     {
-        
-            // require_once OX_BASE_PATH . '/../source/oxfunctions.php';
-            $OxidConfig = new \OxidEsales\Eshop\Core\ConfigFile($ConfigFile);
+        // require_once OX_BASE_PATH . '/../source/oxfunctions.php';
+        $OxidConfig = new \OxidEsales\Eshop\Core\ConfigFile($ConfigFile);
 
-            if(is_array($OxidConfig = $OxidConfig->getVars())) {
+        if(is_array($OxidConfig = $OxidConfig->getVars())) {
 
-                $OxidConfig = array_change_key_case((array)$OxidConfig, CASE_LOWER);
-                $Mapping = [
-                    'database_host' => 'dbHost',
-                    'database_port' => 'dbPort',
-                    'database_user' => 'dbUser',
-                    'database_password' => 'dbPwd',
-                    'database_name' => 'dbName',
-                ];
-                
-                foreach($Mapping as $sParam => $oxParam) {
-                    if(empty($OxidConfig[$sParam])) {
-                        $OxidConfig[$sParam] = $OxidConfig[strtolower($oxParam)];
-                        unset($OxidConfig[strtolower($oxParam)]);
-                    }
-                }
+            $OxidConfig = array_change_key_case((array)$OxidConfig, CASE_LOWER);
+            $Mapping = [
+                'database_host' => 'dbHost',
+                'database_port' => 'dbPort',
+                'database_user' => 'dbUser',
+                'database_password' => 'dbPwd',
+                'database_name' => 'dbName',
+            ];
             
-                if(!file_exists(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml')) {
-                    $this->filesystem->dumpFile(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml', Yaml::dump([
-                        'parameters' => $OxidConfig
-                    ]));
-                } else {
-                    $ContainerBuilder = new ContainerBuilder();
-                    $Extension = new \OxidCommunity\SymfonyKernel\Extension\Extension();
-                    $Extension->getConfiguration([], $ContainerBuilder);
-                    $ContainerBuilder->registerExtension($Extension);
-                    
-                    $loader = new YamlFileLoader(
-                        $ContainerBuilder,
-                        new FileLocator(INSTALLATION_ROOT_PATH.'/kernel/config')
-                    );
-        
-                    $loader->load($ParameterFile . '.yml');
-
-                    $Parameters = [
-                        'parameters' => array_merge(
-                            $OxidConfig,
-                            $ContainerBuilder->getParameterBag()->all()
-                        )
-                    ];
-                    $this->filesystem->dumpFile(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml', Yaml::dump($Parameters));
+            foreach($Mapping as $sParam => $oxParam) {
+                if(empty($OxidConfig[$sParam])) {
+                    $OxidConfig[$sParam] = $OxidConfig[strtolower($oxParam)];
+                    unset($OxidConfig[strtolower($oxParam)]);
                 }
             }
+        
+            if(!file_exists(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml')) {
+                $this->filesystem->dumpFile(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml', Yaml::dump([
+                    'parameters' => $OxidConfig
+                ]));
+            } else {
+                $ContainerBuilder = new ContainerBuilder();
+                $Extension = new \OxidCommunity\SymfonyKernel\Extension\Extension();
+                $Extension->getConfiguration([], $ContainerBuilder);
+                $ContainerBuilder->registerExtension($Extension);
+                
+                $loader = new YamlFileLoader(
+                    $ContainerBuilder,
+                    new FileLocator(INSTALLATION_ROOT_PATH.'/kernel/config')
+                );
+    
+                $loader->load($ParameterFile . '.yml');
+
+                $Parameters = [
+                    'parameters' => array_merge(
+                        $OxidConfig,
+                        $ContainerBuilder->getParameterBag()->all()
+                    )
+                ];
+                $this->filesystem->dumpFile(INSTALLATION_ROOT_PATH.'/kernel/config/' . $ParameterFile . '.yml', Yaml::dump($Parameters));
+            }
+        }
     }
 
     /**
@@ -314,7 +313,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             foreach($extra['oxid-kernel-plugin'] as $customName => $class) {
                 if (empty($Plugins[$package->getName()])) {
                     $Plugins[$package->getName()] = $class;
-                } elseif (!is_number($customName)) {
+                } elseif (!is_numeric($customName)) {
                     $Plugins[$customName] = $class;
                 } else {
                     $Plugins[$package->getName() . '/' . $customName] = $class;

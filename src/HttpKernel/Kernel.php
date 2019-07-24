@@ -36,7 +36,6 @@ class Kernel extends BaseKernel
         }
 
         $Config = [];
-
         $ContainerBuilder = new ContainerBuilder();
         $Extension = new \OxidCommunity\SymfonyKernel\Extension\Extension();
         $Extension->getConfiguration($Config, $ContainerBuilder);
@@ -76,7 +75,6 @@ class Kernel extends BaseKernel
                 }
             }
         }
-
         
         asort($loadBefore);
 
@@ -232,6 +230,8 @@ class Kernel extends BaseKernel
         if (class_exists('ProxyManager\Configuration') && class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
             $container->setProxyInstantiator(new RuntimeInstantiator());
         }
+    
+        $container->setParameter('kernel.project_dir', $this->projectDir);
 
         return $container;
     }

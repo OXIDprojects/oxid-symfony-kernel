@@ -65,9 +65,6 @@ In der composer.json kann dann angegeben werden, dass die Daten unter `src/Resou
 ```
 "extra": {
     "oxideshop": {
-        "blacklist-filter": [
-            "documentation/**/*.*"
-        ],
         "source-directory": "./src/Resources/oxid",
         "target-directory": "VENDOR NAME/PLUGIN NAME"
     },
@@ -85,6 +82,40 @@ In der composer.json kann dann angegeben werden, dass die Daten unter `src/Resou
 ```
 
 In der Datei `Plugin.php` können Routen und Konfigurationen geladen werden.
+
+### Ein Modul benötigt weitere Bundles
+
+Dazu müssen alle Bundles im Requirement-Block geladen werden. Anschließend müssen mehrere `oxid-kernel-plugin` hinterlegt werden. Hier ein Beispiel mit Twig:
+
+```json
+"extra": {
+    "oxideshop": {
+        "source-directory": "./src/Resources/oxid",
+        "target-directory": "VENDOR NAME/PLUGIN NAME"
+    },
+    "oxid-kernel-plugin": {
+        "eigener/paketname": "Your\\Namespace\\PluginName\\YourNamespacePluginNameBundle",
+        "twig": "Symfony\\Bundle\\TwigBundle\\TwigBundle"
+    }
+}
+```
+
+Wichtig ist, dass die Werte "eigener/paketname" und "twig" eindeutig bzw. unique sind. Pakate die später geladen werden, können die Einstellungen überschreiben und eigene Klassen an dieser Stelle laden.
+
+### Stand-Alone ohen Oxid
+
+Der Kernel ist auch gänzlich ohne Oxid nutzbar. Sollte ein Modul den Kernel, aber nicht zwingend Oxid benötigen, kann das Modul mit `composer create-project vendor/modul` installiert werden. Das Modulö benötigt den Parameter `oxid-kernel-plugin` und folgende Scripts:
+
+```json
+"scripts": {
+    "post-install-cmd": [
+      "OxidCommunity\\SymfonyKernel\\Composer\\Plugin::registrateRootPlugin"
+    ],
+    "post-update-cmd": [
+      "OxidCommunity\\SymfonyKernel\\Composer\\Plugin::registrateRootPlugin"
+    ]
+}
+```
 
 ### Configuration
 

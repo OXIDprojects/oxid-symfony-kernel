@@ -54,7 +54,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         
         self::$instance->composer = $event->getComposer();
         self::$instance->io = $event->getIO();
-        self::$instance->packageInstallerTrigger = new PackageInstallerTrigger(self::$instance->io, self::$instance->composer);
+        if(class_exists(PackageInstallerTrigger::class)) {
+            self::$instance->packageInstallerTrigger = new PackageInstallerTrigger(self::$instance->io, self::$instance->composer);
+        }
 
         self::$instance->registrateBundle($event->getComposer()->getPackage(), $event->getIO());
     }
@@ -66,6 +68,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     public function activate(Composer $composer, IOInterface $io): void  {
         $this->composer = $composer;
         $this->io = $io;
+
+        if (!class_exists(PackageInstallerTrigger::class)) {
+            return;
+        }
+
         $this->packageInstallerTrigger = new PackageInstallerTrigger($io, $composer);
         
         $extraSettings = $this->composer->getPackage()->getExtra();

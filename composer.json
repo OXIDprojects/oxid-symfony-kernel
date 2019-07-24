@@ -26,7 +26,6 @@
         "doctrine/orm": "^2.0",
         "symfony/monolog-bundle": "^2",
         "symfony/security-bundle": "~3.1.0",
-        "oxid-esales/oxideshop-composer-plugin": "^2",
         "symfony/yaml": "^2.8"
     },
     "require-dev": {

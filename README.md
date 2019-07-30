@@ -2,8 +2,8 @@
 
 ## Liste der Module die den Kernel verwenden
 
-- https://github.com/OXIDprojects/oxid-module-installer
-- https://github.com/Sioweb/OxidApi (Nur als Demo)
+- [Oxid Module Installer (In Entwicklung)](https://github.com/OXIDprojects/oxid-module-installer)
+- [Sioweb/OxidApi (Demomodul)](https://github.com/Sioweb/OxidApi)
 
 ## Installation
 

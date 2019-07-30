@@ -1,5 +1,10 @@
 # OxidKernel
 
+## Liste der Module die den Kernel verwenden
+
+- https://github.com/OXIDprojects/oxid-module-installer
+- https://github.com/Sioweb/OxidApi (Nur als Demo)
+
 ## Installation
 
 Falls nicht schon gesehen, installiere [Composer](https://getcomposer.org/download/) auf deinen Rechner. Öffne die Konsole im Root von Oxid und führe folgenden Befehl aus:

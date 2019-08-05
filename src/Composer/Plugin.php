@@ -84,16 +84,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $repo = $this->composer->getRepositoryManager()->getLocalRepository();
 
         foreach ($repo->getPackages() as $Package) {
-            if ($Package->getName() === 'oxid-community\symfonykernel') {
+            if ($Package->getName() === 'oxid-community/symfony-kernel') {
                 $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
                 $SourceDir = $this->formSourcePath($Package);
                 $TargetDir = $this->formTargetPath();
                 if (is_dir($SourceDir)) {
                     if (!is_dir($TargetDir)) {
-                        $io->write('<info>oxid-community\symfonykernel:</info> Oxid kernel will be installed into oxid modules directory.');
+                        $io->write('<info>oxid-community/symfony-kernel:</info> Oxid kernel will be installed into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     } else {
-                        $io->write('<info>oxid-community\symfonykernel:</info> Oxid kernel will be reintegrated into oxid modules directory.');
+                        $io->write('<info>oxid-community/symfony-kernel:</info> Oxid kernel will be reintegrated into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     }
                 }
@@ -116,7 +116,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
         // "source-directory": "src/Resources/oxid",
-        // "target-directory": "oxid-community/SymfonyKernel"
+        // "target-directory": "oxid-community/symfony-kernel"
         $sourceDirectory = 'src/Resources/oxid';
         $packagePath = $this->packageInstallerTrigger->getInstallPath($Package);
 
@@ -210,7 +210,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             try {
                 $FileLocator->locate('bundles.yml');
             } catch(\Exception $e) {
-                $this->filesystem->dumpFile(__DIR__.'/../Resources/config/bundles.yml', Yaml::dump(['oxid-kernel' => ['bundles' => []]]));
+                $this->filesystem->dumpFile(__DIR__.'/../Resources/config/bundles.yml', Yaml::dump(['oxid-symfony-kernel' => ['bundles' => []]]));
             }
 
             $loader = new YamlFileLoader(
@@ -221,11 +221,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $loader->load('bundles.yml');
 
             $Bundles = [
-                'oxid-kernel' => [
-                    'bundles' => $ContainerBuilder->getExtensionConfig('oxid-kernel')[0]
+                'oxid-symfony-kernel' => [
+                    'bundles' => $ContainerBuilder->getExtensionConfig('oxid-symfony-kernel')[0]
                 ]
             ];
-            $Bundles['oxid-kernel']['bundles'] = $plugins;
+            $Bundles['oxid-symfony-kernel']['bundles'] = $plugins;
 
             $this->filesystem->dumpFile(__DIR__.'/../Resources/config/bundles.yml', Yaml::dump($Bundles));
 

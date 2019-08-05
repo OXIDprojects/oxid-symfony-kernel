@@ -84,16 +84,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $repo = $this->composer->getRepositoryManager()->getLocalRepository();
 
         foreach ($repo->getPackages() as $Package) {
-            if ($Package->getName() === 'oxid-community\SymfonyKernel') {
+            if ($Package->getName() === 'oxid-community\symfonykernel') {
                 $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
                 $SourceDir = $this->formSourcePath($Package);
                 $TargetDir = $this->formTargetPath();
                 if (is_dir($SourceDir)) {
                     if (!is_dir($TargetDir)) {
-                        $io->write('<info>oxid-community\SymfonyKernel:</info> Oxid kernel will be installed into oxid modules directory.');
+                        $io->write('<info>oxid-community\symfonykernel:</info> Oxid kernel will be installed into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     } else {
-                        $io->write('<info>oxid-community\SymfonyKernel:</info> Oxid kernel will be reintegrated into oxid modules directory.');
+                        $io->write('<info>oxid-community\symfonykernel:</info> Oxid kernel will be reintegrated into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     }
                 }
@@ -116,7 +116,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
         // "source-directory": "src/Resources/oxid",
-        // "target-directory": "oxid-community\SymfonyKernel"
+        // "target-directory": "oxid-community/SymfonyKernel"
         $sourceDirectory = 'src/Resources/oxid';
         $packagePath = $this->packageInstallerTrigger->getInstallPath($Package);
 
@@ -131,7 +131,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected function formTargetPath()
     {
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
-        return Path::join($RootPath, 'modules', 'oxid-community\SymfonyKernel');
+        return Path::join($RootPath, 'modules', 'oxid-community\symfonykernel');
     }
 
     public function addBundles(Event $event): void

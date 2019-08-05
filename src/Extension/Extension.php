@@ -21,7 +21,7 @@ class Extension extends BaseExtension
 	 */
 	public function getAlias()
 	{
-		return 'oxid-kernel';
+		return 'oxid-symfony-kernel';
     }
     
     /**

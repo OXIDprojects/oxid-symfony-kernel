@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
 	public function getConfigTreeBuilder()
 	{
 		$treeBuilder = new TreeBuilder();
-		$rootNode = $treeBuilder->root('oxid-kernel');
+		$rootNode = $treeBuilder->root('oxid-symfony-kernel');
 
 		$rootNode
 			->children()

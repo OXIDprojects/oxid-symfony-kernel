@@ -51,6 +51,7 @@ class RequestListener
         
         $context = new RequestContext();
         $context->fromRequest(Request::createFromGlobals());
+        // $context->setPathInfo(rtrim($context->getPathInfo(), '/') . '/');
         $matcher = new UrlMatcher($Routes, $context);
 
         $Match = $matcher->checkRoute($request);

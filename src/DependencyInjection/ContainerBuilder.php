@@ -22,15 +22,6 @@ class ContainerBuilder extends BaseContainerBuilder
 {
     private $autoloadedBundles = [];
 
-    // /**
-    //  * @param ParameterBagInterface $parameterBag A ParameterBagInterface instance
-    //  */
-    // public function __construct(ParameterBagInterface $parameterBag = null)
-    // {
-    //     echo "<pre>" . print_r('NEW ContainerBuilder', true) . "</pre>";
-    //     parent::__construct($parameterBag);
-    // }
-
     public function getBundle($bundle) {
         return $this->autoloadedBundles[$bundle];
     }
@@ -76,42 +67,28 @@ class ContainerBuilder extends BaseContainerBuilder
         return parent::getExtensionConfig($name);
     }
 
-    /**
-     * Compiles the container.
-     *
-     * This method passes the container to compiler
-     * passes whose job is to manipulate and optimize
-     * the container.
-     *
-     * The main compiler passes roughly do four things:
-     *
-     *  * The extension configurations are merged;
-     *  * Parameter values are resolved;
-     *  * The parameter bag is frozen;
-     *  * Extension loading is disabled.
-     */
-    public function compile()
-    {
-        $compiler = $this->getCompiler();
+    // public function compile()
+    // {
+    //     $compiler = $this->getCompiler();
 
-        if ($this->trackResources) {
-            foreach ($compiler->getPassConfig()->getPasses() as $pass) {
-                $this->addObjectResource($pass);
-            }
-        }
+    //     if ($this->trackResources) {
+    //         foreach ($compiler->getPassConfig()->getPasses() as $pass) {
+    //             $this->addObjectResource($pass);
+    //         }
+    //     }
 
-        if ($this->trackResources) {
-            foreach ($this->definitions as $definition) {
-                if ($definition->isLazy() && ($class = $definition->getClass()) && class_exists($class)) {
-                    $this->addClassResource(new \ReflectionClass($class));
-                }
-            }
-        }
+    //     if ($this->trackResources) {
+    //         foreach ($this->definitions as $definition) {
+    //             if ($definition->isLazy() && ($class = $definition->getClass()) && class_exists($class)) {
+    //                 $this->addClassResource(new \ReflectionClass($class));
+    //             }
+    //         }
+    //     }
         
-        $compiler->compile($this);
+    //     $compiler->compile($this);
 
-        $this->extensionConfigs = array();
-        /** Do not run parent compile; This will cause 'Unable to register extension "..." as it is already registered' */
-        // parent::compile($this);
-    }
+    //     $this->extensionConfigs = array();
+    //     /** Do not run parent compile; This will cause 'Unable to register extension "..." as it is already registered' */
+    //     // parent::compile($this);
+    // }
 }

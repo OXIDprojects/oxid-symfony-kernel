@@ -204,7 +204,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             try {
                 $FileLocator->locate('bundles.yml');
             } catch (\Exception $e) {
-                $this->filesystem->dumpFile(__DIR__ . '/../Resources/config/bundles.yml', Yaml::dump(['oxid-kernel' => ['bundles' => []]]));
+                $this->filesystem->dumpFile(__DIR__ . '/../Resources/config/bundles.yml', Yaml::dump(['oxid-symfony-kernel' => ['bundles' => []]]));
             }
 
             $loader = new YamlFileLoader(

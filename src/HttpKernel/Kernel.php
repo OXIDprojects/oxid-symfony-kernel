@@ -19,6 +19,9 @@ class Kernel extends BaseKernel
 {
     private $autoloadetBundles = [];
 
+    private $cacheSourceDir = null;
+    private $logSourceDir = null;
+
     public function registerBundles()
     {
         $autoloadetBundles = [
@@ -103,14 +106,32 @@ class Kernel extends BaseKernel
         return $this->projectDir;
     }
 
+    public function setCacheSourceDir($path)
+    {
+        $this->cacheSourceDir = $path;
+    }
+
     public function getCacheDir()
     {
-        return $this->getProjectDir() . '/kernel/var/cache/' . $this->getEnvironment();
+        $Path = $this->cacheSourceDir;
+        if(empty($Path)) {
+            $Path = $this->getProjectDir();
+        }
+        return $Path . '/kernel/var/cache/' . $this->getEnvironment();
+    }
+
+    public function setLogSourceDir($path)
+    {
+        $this->logSourceDir = $path;
     }
 
     public function getLogDir()
     {
-        return $this->getProjectDir() . '/kernel/var/log/' . $this->getEnvironment();
+        $Path = $this->logSourceDir;
+        if(empty($Path)) {
+            $Path = $this->getProjectDir();
+        }
+        return $Path . '/kernel/var/log/' . $this->getEnvironment();
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

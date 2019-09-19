@@ -17,6 +17,7 @@
     "license": "GPL-3.0-only",
     "require": {
         "php": "^7.0",
+        "oxid-esales/oxideshop-ce": "*",
         "composer/composer": "^1.9",
         "composer-plugin-api": "^1.1",
         "symfony/routing": "^3.2",

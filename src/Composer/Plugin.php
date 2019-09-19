@@ -254,6 +254,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private function mapOxidConfig($ConfigFile, $ParameterFile)
     {
         // require_once OX_BASE_PATH . '/../source/oxfunctions.php';
+        include dirname(__DIR__) . '/../../../autoload.php';
         $OxidConfig = new \OxidEsales\Eshop\Core\ConfigFile($ConfigFile);
 
         if (is_array($OxidConfig = $OxidConfig->getVars())) {

@@ -23,7 +23,7 @@ class ShopControl extends ShopControl_parent
         Request::enableHttpMethodParameterOverride();
         $kernel = new Kernel('prod', false);
 
-        $kernel->setProjectRoot(trim(preg_replace('|\\\|is', '/', __DIR__), 'source/modules/oxid-community/symfony-kernel/Core'));
+        $kernel->setProjectRoot(trim(preg_replace('|\\\|is', '/', $_SERVER['DOCUMENT_ROOT']), 'source'));
         $request = Request::createFromGlobals();
         $response = $kernel->handle($request);
         $responseStatusCode = $response->getStatusCode();

@@ -1,2 +1,2 @@
 oxid-symfony-kernel:
-    bundles: {}
+    bundles: { cihaeuser/hotspots: Ci\Oxid\Hotspots\CiOxidHotspotsBundle, sioweb/oxid-api: Sioweb\Oxid\Api\SiowebOxidApiBundle, symfony/security-bundle: Symfony\Bundle\SecurityBundle\SecurityBundle }

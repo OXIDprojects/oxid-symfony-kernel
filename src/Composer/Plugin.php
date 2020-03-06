@@ -13,9 +13,10 @@ use Composer\Plugin\PluginInterface;
 use Composer\Repository\RepositoryInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use OxidEsales\ComposerPlugin\Installer\PackageInstallerTrigger;
+use OxidCommunity\SymfonyKernel\Composer\Installer\PackageInstallerTrigger;
 use OxidEsales\ComposerPlugin\Installer\Package\AbstractPackageInstaller;
-use OxidEsales\ComposerPlugin\Installer\Package\ModulePackageInstaller;
+use OxidCommunity\SymfonyKernel\Composer\Installer\Package\ModulePackageInstaller;
+use OxidCommunity\SymfonyKernel\Composer\Installer\Package\ThemePackageInstaller;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -79,16 +80,25 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $repo = $this->composer->getRepositoryManager()->getLocalRepository();
 
         foreach ($repo->getPackages() as $Package) {
-            if ($Package->getName() === 'oxid-community/symfony-kernel') {
-                $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
+            if ($Package->getName() === 'oxid-community/symfony-kernel' || preg_match('/oxidkernel-(module|theme)/is', $Package->getType())) {
+                
+                switch($Package->getType()) {
+                    case 'oxidkernel-module':
+                        $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
+                    break;
+                    case 'oxidkernel-theme':
+                        $packageInstaller = new ThemePackageInstaller($this->io, $RootPath, $Package);
+                    break;
+                }
+                
                 $SourceDir = $this->formSourcePath($Package);
                 $TargetDir = $this->formTargetPath();
                 if (is_dir($SourceDir)) {
                     if (!is_dir($TargetDir)) {
-                        $io->write('<info>oxid-community/symfony-kernel:</info> Oxid kernel will be installed into oxid modules directory.');
+                        $io->write('<info>' . $Package->getName() . ':</info> Oxid kernel will be installed into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     } else {
-                        $io->write('<info>oxid-community/symfony-kernel:</info> Oxid kernel will be reintegrated into oxid modules directory.');
+                        $io->write('<info>' . $Package->getName() . ':</info> Oxid kernel will be reintegrated into oxid modules directory.');
                         $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
                     }
                 }
@@ -109,6 +119,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     protected function formSourcePath($Package)
     {
+        // echo '<pre>' . __METHOD__ . ":\n" . print_r($Package->getName(), true) . "\n#################################\n\n" . '</pre>';
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
         // "source-directory": "src/Resources/oxid",
         // "target-directory": "oxid-community/symfony-kernel"
@@ -253,8 +264,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     private function mapOxidConfig($ConfigFile, $ParameterFile)
     {
-        // require_once OX_BASE_PATH . '/../source/oxfunctions.php';
-        include dirname(__DIR__) . '/../../../autoload.php';
+        include rtrim($this->composer->getConfig()->get('vendor-dir'), '/') . '/autoload.php';
         $OxidConfig = new \OxidEsales\EshopCommunity\Core\ConfigFile($ConfigFile);
 
         if (is_array($OxidConfig = $OxidConfig->getVars())) {

@@ -18,6 +18,7 @@
     "require": {
         "php": "^7.0",
         "oxid-esales/oxideshop-ce": "*",
+        "oxid-esales/oxideshop-composer-plugin": "*",
         "composer/composer": "^1",
         "composer-plugin-api": "^1.1",
         "symfony/routing": "^3.2",
@@ -28,7 +29,8 @@
         "doctrine/orm": "^2.0",
         "symfony/monolog-bundle": "^2",
         "symfony/security-bundle": "~3.1.0",
-        "symfony/yaml": "^2.8"
+        "symfony/yaml": "^2.8",
+        "symfony/filesystem": "^v3.4"
     },
     "require-dev": {
         "ext-zip": "*"

@@ -5,7 +5,7 @@
  */
 $sMetadataVersion = '2.0';
 
-// 1234
+// 12345
 
 /**
  * Module information

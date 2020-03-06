@@ -35,6 +35,12 @@ Damit Kernel funktioniert musst die Ladereihenfolge korrekt eingerichtet sein. �
 
 Alles was Symfony bietet, oder zumindest alles, was die Symfony-Version von Oxid bietet. Die meisten Symfony 3 Komponenten sollten funktionieren, versuche aber bitte nicht, die Oxid-Tabellen mit Entities zu nutzen. Das Oxid-Framework sollte weitgehends verwendet werden, um Daten zu verarbeiten oder zu formatieren. Die machen das schon ganz gut. OxidKernel hat erst dann einen Vorteil, wenn es um Komminikation mit anderen Systemen etc. geht, oder du mit Komposer bestehende Bundles hinzufügen möchtest.
 
+## Module und Assets als Symlink verlinken
+
+Dieses Modul kann ebenfalls als Ersatz für den Oxid-Composer verwendet werden. Module die `oxidkernel-module` als `type` besitzen, werden nicht mehr kopiert, sondern als Symlink angelegt. Alle Dateien, die unter `/source/modules/` verfügbar sein sollen, müssen im Modul unter `/src/Resources/oxid` gespeichert werden. 
+
+Für tools wie Webpack etc. können Assets wie JS- und CSS-Dateien im Modul unter `/src/Resources/public` gespeichert werden. Diese werden dann als Symlink unter `/source/out/assets/module/packagename/` verlinkt.
+
 ## Beispiel
 
 Das Modul [sioweb/oxid-api](https://github.com/Sioweb/OxidApi) basiert auf diesem OxidKernel und fügt eine REST-API hinzu, mit der Daten aus Oxid abgegriffen werden können. OxidKernel wird automatisch installiert, wenn `composer req sioweb/oxid-api` ausgeführt wird.
@@ -107,7 +113,7 @@ Dazu müssen alle Bundles im Requirement-Block geladen werden. Anschließend mü
 
 Wichtig ist, dass die Werte "eigener/paketname" und "twig" eindeutig bzw. unique sind. Pakate die später geladen werden, können die Einstellungen überschreiben und eigene Klassen an dieser Stelle laden.
 
-### Stand-Alone ohen Oxid
+### Stand-Alone ohne Oxid
 
 Der Kernel ist auch gänzlich ohne Oxid nutzbar. Sollte ein Modul den Kernel, aber nicht zwingend Oxid benötigen, kann das Modul mit `composer create-project vendor/modul` installiert werden. Das Modulö benötigt den Parameter `oxid-kernel-plugin` und folgende Scripts:
 

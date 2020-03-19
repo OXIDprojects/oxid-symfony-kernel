@@ -2,7 +2,6 @@
     "name": "oxid-community/symfony-kernel",
     "description": "Symfony kernel for oxid",
     "type": "composer-plugin",
-    "version": "6.0.2",
     "authors": [
         {
             "name": "Sascha Weidner",

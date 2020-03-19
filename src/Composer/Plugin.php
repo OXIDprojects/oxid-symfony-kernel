@@ -79,32 +79,19 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
         $repo = $this->composer->getRepositoryManager()->getLocalRepository();
 
-        foreach ($repo->getPackages() as $Package) {
-            if ($Package->getName() === 'oxid-community/symfony-kernel' || preg_match('/oxidkernel-(module|theme)/is', $Package->getType())) {
+        // foreach ($repo->getPackages() as $Package) {
+        //     if ($Package->getName() === 'oxid-community/symfony-kernel') {
                 
-                switch($Package->getType()) {
-                    case 'oxidkernel-module':
-                        $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
-                    break;
-                    case 'oxidkernel-theme':
-                        $packageInstaller = new ThemePackageInstaller($this->io, $RootPath, $Package);
-                    break;
-                }
+        //         $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
                 
-                $SourceDir = $this->formSourcePath($Package);
-                $TargetDir = $this->formTargetPath();
-                if (is_dir($SourceDir)) {
-                    if (!is_dir($TargetDir)) {
-                        $io->write('<info>' . $Package->getName() . ':</info> Oxid kernel will be installed into oxid modules directory.');
-                        $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
-                    } else {
-                        $io->write('<info>' . $Package->getName() . ':</info> Oxid kernel will be reintegrated into oxid modules directory.');
-                        $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
-                    }
-                }
-                break;
-            }
-        }
+        //         $SourceDir = $this->formSourcePath($Package);
+        //         $TargetDir = $this->formTargetPath();
+        //         if (is_dir($SourceDir)) {
+        //             $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
+        //         }
+        //         break;
+        //     }
+        // }
 
         // $this->registrateBundles($repo->getPackages(), $io, true);
     }
@@ -119,7 +106,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     protected function formSourcePath($Package)
     {
-        // echo '<pre>' . __METHOD__ . ":\n" . print_r($Package->getName(), true) . "\n#################################\n\n" . '</pre>';
         $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
         // "source-directory": "src/Resources/oxid",
         // "target-directory": "oxid-community/symfony-kernel"
@@ -182,6 +168,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     private function loadPluginClasses($Package, $io)
     {
         $plugins = [];
+
         foreach ($this->getPluginClasses($Package) as $name => $classes) {
             if (!is_array($classes)) {
                 $classes = [$classes];
@@ -196,6 +183,46 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 $io->write(' - Added plugin for ' . $name, true, IOInterface::VERY_VERBOSE);
 
                 $plugins[$name] = $class;
+            }
+        }
+
+        if (!class_exists(PackageInstallerTrigger::class)) {
+            return;
+        }
+
+        $this->packageInstallerTrigger = new PackageInstallerTrigger($this->io, $this->composer);
+
+        $extraSettings = $this->composer->getPackage()->getExtra();
+        if (isset($extraSettings[AbstractPackageInstaller::EXTRA_PARAMETER_KEY_ROOT])) {
+            $this->packageInstallerTrigger->setSettings($extraSettings[AbstractPackageInstaller::EXTRA_PARAMETER_KEY_ROOT]);
+        }
+
+        $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
+
+        if ($Package->getName() === 'oxid-community/symfony-kernel' || preg_match('/oxidkernel-(module|theme)/is', $Package->getType())) {
+            if($Package->getName() === 'oxid-community/symfony-kernel') {
+                $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
+            } else {
+                switch($Package->getType()) {
+                    case 'oxidkernel-theme':
+                        $packageInstaller = new ThemePackageInstaller($this->io, $RootPath, $Package);
+                    break;
+                    default:
+                        $packageInstaller = new ModulePackageInstaller($this->io, $RootPath, $Package);
+                    break;
+                }
+            }
+            
+            $SourceDir = $this->formSourcePath($Package);
+            $TargetDir = $this->formTargetPath();
+            if (is_dir($SourceDir)) {
+                if (!is_dir($TargetDir)) {
+                    $io->write('- Symfony Kernel: Symlinking (' . $Package->getType() . ') <info>' . $Package->getName() . '</info>');
+                    $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
+                } else {
+                    $io->write('- Symfony Kernel: Symlinking (' . $Package->getType() . ') <info>' . $Package->getName() . '</info>');
+                    $packageInstaller->install($this->packageInstallerTrigger->getInstallPath($Package));
+                }
             }
         }
 

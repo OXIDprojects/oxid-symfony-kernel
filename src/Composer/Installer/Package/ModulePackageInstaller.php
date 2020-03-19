@@ -22,7 +22,6 @@ class ModulePackageInstaller extends OxidModulePackageInstaller
      */
     public function install($packagePath)
     {
-        $this->getIO()->write("Installing module {$this->getPackageName()} package.");
         $this->symlinkPackage($packagePath);
     }
 

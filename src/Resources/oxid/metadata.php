@@ -22,6 +22,8 @@ $aModule = [
             OxidCommunity\SymfonyKernel\Legacy\Core\ShopControl::class,
         \OxidEsales\Eshop\Core\SeoDecoder::class =>
             OxidCommunity\SymfonyKernel\Legacy\Core\SeoDecoder::class,
+        \OxidEsales\Eshop\Core\ViewConfig::class =>
+            OxidCommunity\SymfonyKernel\Legacy\Core\ViewConfig::class,
     ],
     'events' => [
         'onActivate' => '\OxidCommunity\SymfonyKernel\Legacy\Core\Events::onActivate',

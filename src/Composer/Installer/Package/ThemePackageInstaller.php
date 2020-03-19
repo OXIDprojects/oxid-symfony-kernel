@@ -6,6 +6,7 @@
 
 namespace OxidCommunity\SymfonyKernel\Composer\Installer\Package;
 
+use Webmozart\PathUtil\Path;
 use OxidEsales\ComposerPlugin\Installer\Package\ThemePackageInstaller as OxidThemePackageInstaller;
 use OxidCommunity\SymfonyKernel\Composer\Utilities\CopyFileManager\CopyGlobFilteredFileManager;
 
@@ -21,7 +22,6 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
      */
     public function install($packagePath)
     {
-        $this->getIO()->write("Installing {$this->getPackage()->getName()} package");
         $this->symlinkPackage($packagePath);
     }
 
@@ -54,7 +54,7 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
 
         CopyGlobFilteredFileManager::symlink(
             $this->formSourcePath($packagePath),
-            $this->formTargetPath(),
+            $this->formThemeTargetPath(),
             $this->getCombinedFilters($filtersToApply)
         );
 
@@ -67,9 +67,25 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
 
             CopyGlobFilteredFileManager::symlink(
                 $publicPath,
-                rtrim($publicTarget, '/') . '/' . str_replace('/', '', $this->getPackage()->getName()),
+                rtrim($publicTarget, '/') . '/' . str_replace('/', '', $this->formAssetsDirectoryName()),
                 $this->getCombinedFilters($filtersToApply)
             );
         }
+    }
+    /**
+     * If module source directory option provided add it's relative path.
+     * Otherwise return plain package path.
+     *
+     * @param string $packagePath
+     *
+     * @return string
+     */
+    protected function formSourcePath($packagePath)
+    {
+        $sourceDirectory = $this->getExtraParameterValueByKey(static::EXTRA_PARAMETER_KEY_SOURCE);
+
+        return !empty($sourceDirectory)?
+            Path::join($packagePath, $sourceDirectory):
+            $packagePath;
     }
 }

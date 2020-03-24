@@ -58,7 +58,7 @@ class ModulePackageInstaller extends OxidModulePackageInstaller
         );
 
         if(is_dir($publicPath = rtrim($packagePath, '/') . '/src/Resources/public/')) {
-            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/out/assets/modules/';
+            $publicTarget = $this->getRelativePath(rtrim($this->getRootDirectory(), '/') . '/out/assets/modules/');
 
             if(!is_dir($publicTarget)) {
                 mkdir($publicTarget, 0777, true);
@@ -70,5 +70,10 @@ class ModulePackageInstaller extends OxidModulePackageInstaller
                 $this->getCombinedFilters($filtersToApply)
             );
         }
+    }
+
+    private function getRelativePath(string $path): string
+    {
+        return str_replace(strtr($this->getRootDirectory(), '\\', '/').'/', '', strtr($path, '\\', '/'));
     }
 }

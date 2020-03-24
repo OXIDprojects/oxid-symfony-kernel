@@ -124,7 +124,7 @@ class CopyGlobFilteredFileManager extends OxidCopyGlobFilteredFileManager
             $globExpressionList
         );
 
-        $filesystem->symlink($sourcePath, $destinationPath, $filteredFileListIterator, ["override" => true]);
+        $filesystem->symlink($filesystem->makePathRelative($sourcePath, dirname($destinationPath)), $destinationPath, $filteredFileListIterator, ["override" => true]);
     }
 
     /**

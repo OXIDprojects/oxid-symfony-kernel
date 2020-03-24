@@ -59,7 +59,7 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
         );
 
         if(is_dir($publicPath = rtrim($packagePath, '/') . '/src/Resources/public/')) {
-            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/out/assets/themes/';
+            $publicTarget = $this->getRelativePath(rtrim($this->getRootDirectory(), '/') . '/out/assets/themes/');
 
             if(!is_dir($publicTarget)) {
                 mkdir($publicTarget, 0777, true);
@@ -87,5 +87,10 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
         return !empty($sourceDirectory)?
             Path::join($packagePath, $sourceDirectory):
             $packagePath;
+    }
+
+    private function getRelativePath(string $path): string
+    {
+        return str_replace(strtr($this->getRootDirectory(), '\\', '/').'/', '', strtr($path, '\\', '/'));
     }
 }

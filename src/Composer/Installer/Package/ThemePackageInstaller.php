@@ -54,13 +54,13 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
         ];
 
         CopyGlobFilteredFileManager::symlink(
-            $this->formSourcePath($packagePath),
+            $this->getRelativePath($this->formSourcePath($packagePath)),
             $this->formThemeTargetPath(),
             $this->getCombinedFilters($filtersToApply)
         );
 
         if(is_dir($publicPath = rtrim($packagePath, '/') . '/src/Resources/public/')) {
-            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/' . ShopPackageInstaller::SHOP_SOURCE_DIRECTORY . '/out/assets/themes/';
+            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/out/assets/themes/';
 
             if(!is_dir($publicTarget)) {
                 mkdir($publicTarget, 0777, true);
@@ -104,6 +104,6 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
 
     private function getRelativePath(string $path): string
     {
-        return str_replace(strtr($this->getRootDirectory(), '\\', '/').'/', '', strtr($path, '\\', '/'));
+        return str_replace(strtr(str_replace('/source', '', $this->getRootDirectory()), '\\', '/').'/', '', strtr($path, '\\', '/'));
     }
 }

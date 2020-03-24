@@ -51,15 +51,16 @@ class ModulePackageInstaller extends OxidModulePackageInstaller
             $this->getBlacklistFilterValue(),
             $this->getVCSFilter(),
         ];
-
+        
         CopyGlobFilteredFileManager::symlink(
             $this->formSourcePath($packagePath),
             $this->formTargetPath(),
             $this->getCombinedFilters($filtersToApply)
+            // ,true
         );
 
         if(is_dir($publicPath = rtrim($packagePath, '/') . '/src/Resources/public/')) {
-            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/' . ShopPackageInstaller::SHOP_SOURCE_DIRECTORY . '/out/assets/modules/';
+            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/out/assets/modules/';
 
             if(!is_dir($publicTarget)) {
                 mkdir($publicTarget, 0777, true);
@@ -75,6 +76,6 @@ class ModulePackageInstaller extends OxidModulePackageInstaller
 
     private function getRelativePath(string $path): string
     {
-        return str_replace(strtr($this->getRootDirectory(), '\\', '/').'/', '', strtr($path, '\\', '/'));
+        return str_replace(strtr(str_replace('/source', '', $this->getRootDirectory()), '\\', '/').'/', '', strtr($path, '\\', '/'));
     }
 }

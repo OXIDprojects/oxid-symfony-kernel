@@ -30,7 +30,7 @@ class CopyGlobFilteredFileManager extends OxidCopyGlobFilteredFileManager
      *
      * @return null
      */
-    public static function symlink($sourcePath, $destinationPath, $globExpressionList = [])
+    public static function symlink($sourcePath, $destinationPath, $globExpressionList = [], $debug = false)
     {
         if (!is_string($sourcePath)) {
             $message = "Given value \"$sourcePath\" is not a valid source path entry. ".
@@ -51,9 +51,9 @@ class CopyGlobFilteredFileManager extends OxidCopyGlobFilteredFileManager
         }
 
         if (is_dir($sourcePath)) {
-            self::symlinkDirectory($sourcePath, $destinationPath, $globExpressionList);
+            self::symlinkDirectory($sourcePath, $destinationPath, $globExpressionList, $debug);
         } else {
-            self::symlinkFile($sourcePath, $destinationPath, $globExpressionList);
+            self::symlinkFile($sourcePath, $destinationPath, $globExpressionList, $debug);
         }
     }
 
@@ -113,7 +113,7 @@ class CopyGlobFilteredFileManager extends OxidCopyGlobFilteredFileManager
      * @param string $destinationPath    Absolute path to directory.
      * @param array  $globExpressionList List of glob expressions, e.g. ["*.txt", "*.pdf"].
      */
-    private static function symlinkDirectory($sourcePath, $destinationPath, $globExpressionList)
+    private static function symlinkDirectory($sourcePath, $destinationPath, $globExpressionList, $debug = false)
     {
         $filesystem = new Filesystem();
 
@@ -123,6 +123,13 @@ class CopyGlobFilteredFileManager extends OxidCopyGlobFilteredFileManager
             $sourcePath,
             $globExpressionList
         );
+
+        if($debug) {
+            die('<pre>' . __METHOD__ . ":\n" . print_r([
+                $filesystem->makePathRelative($sourcePath, dirname($destinationPath)),
+                $destinationPath
+            ], true) . "\n#################################\n\n" . '</pre>');
+        }
 
         $filesystem->symlink($filesystem->makePathRelative($sourcePath, dirname($destinationPath)), $destinationPath, $filteredFileListIterator, ["override" => true]);
     }
@@ -134,7 +141,7 @@ class CopyGlobFilteredFileManager extends OxidCopyGlobFilteredFileManager
      * @param string $destinationPath    Absolute path to directory.
      * @param array  $globExpressionList List of glob expressions, e.g. ["*.txt", "*.pdf"].
      */
-    private static function symlinkFile($sourcePathOfFile, $destinationPath, $globExpressionList)
+    private static function symlinkFile($sourcePathOfFile, $destinationPath, $globExpressionList, $debug = false)
     {
         $filesystem = new Filesystem();
 

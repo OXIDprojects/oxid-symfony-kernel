@@ -9,6 +9,7 @@ namespace OxidCommunity\SymfonyKernel\Composer\Installer\Package;
 use Webmozart\PathUtil\Path;
 use OxidEsales\ComposerPlugin\Installer\Package\ThemePackageInstaller as OxidThemePackageInstaller;
 use OxidCommunity\SymfonyKernel\Composer\Utilities\CopyFileManager\CopyGlobFilteredFileManager;
+use OxidEsales\ComposerPlugin\Installer\Package\ShopPackageInstaller;
 
 /**
  * @inheritdoc
@@ -59,11 +60,23 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
         );
 
         if(is_dir($publicPath = rtrim($packagePath, '/') . '/src/Resources/public/')) {
-            $publicTarget = $this->getRelativePath(rtrim($this->getRootDirectory(), '/') . '/out/assets/themes/');
+            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/' . ShopPackageInstaller::SHOP_SOURCE_DIRECTORY . '/out/assets/themes/';
 
             if(!is_dir($publicTarget)) {
                 mkdir($publicTarget, 0777, true);
             }
+
+            // echo '<pre>' . __METHOD__ . ":\n" . print_r([
+            //     $publicPath,
+            //     rtrim($publicTarget, '/') . '/' . str_replace('/', '', $this->formAssetsDirectoryName())
+            // ], true) . "\n#################################\n\n" . '</pre>';
+
+            // Array
+            // (
+            //     [0] => /app/vendor/cihaeuser/theme/src/Resources/public/
+            //     [1] => /app/source/out/assets/themes/ci
+            // )
+
 
             CopyGlobFilteredFileManager::symlink(
                 $publicPath,

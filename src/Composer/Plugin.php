@@ -197,7 +197,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $this->packageInstallerTrigger->setSettings($extraSettings[AbstractPackageInstaller::EXTRA_PARAMETER_KEY_ROOT]);
         }
 
-        $RootPath = $this->packageInstallerTrigger->getShopSourcePath();
+        $RootPath = str_replace('/source', '', $this->packageInstallerTrigger->getShopSourcePath());
 
         if ($Package->getName() === 'oxid-community/symfony-kernel' || preg_match('/oxidkernel-(module|theme)/is', $Package->getType())) {
             if($Package->getName() === 'oxid-community/symfony-kernel') {

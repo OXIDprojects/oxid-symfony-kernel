@@ -8,6 +8,7 @@ namespace OxidCommunity\SymfonyKernel\Composer\Installer\Package;
 
 use OxidEsales\ComposerPlugin\Installer\Package\ModulePackageInstaller as OxidModulePackageInstaller;
 use OxidCommunity\SymfonyKernel\Composer\Utilities\CopyFileManager\CopyGlobFilteredFileManager;
+use OxidEsales\ComposerPlugin\Installer\Package\ShopPackageInstaller;
 
 /**
  * @inheritdoc
@@ -58,7 +59,7 @@ class ModulePackageInstaller extends OxidModulePackageInstaller
         );
 
         if(is_dir($publicPath = rtrim($packagePath, '/') . '/src/Resources/public/')) {
-            $publicTarget = $this->getRelativePath(rtrim($this->getRootDirectory(), '/') . '/out/assets/modules/');
+            $publicTarget = rtrim($this->getRootDirectory(), '/') . '/' . ShopPackageInstaller::SHOP_SOURCE_DIRECTORY . '/out/assets/modules/';
 
             if(!is_dir($publicTarget)) {
                 mkdir($publicTarget, 0777, true);

@@ -54,7 +54,7 @@ class ThemePackageInstaller extends OxidThemePackageInstaller
         ];
 
         CopyGlobFilteredFileManager::symlink(
-            $this->getRelativePath($this->formSourcePath($packagePath)),
+            $this->formSourcePath($packagePath),
             $this->formThemeTargetPath(),
             $this->getCombinedFilters($filtersToApply)
         );

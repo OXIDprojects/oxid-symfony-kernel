@@ -10,7 +10,10 @@ class ViewConfig extends ViewConfig_parent
     {
         $oModule = oxNew(\OxidEsales\Eshop\Core\Module\Module::class);
         $sModulePath = $oModule->getModulePath($sModule);
-        return str_replace('src/Resources/oxid', '', readlink($this->getConfig()->getModulesDir() . $sModulePath));
+        $sModulePath = $this->getConfig()->getModulesDir() . $sModulePath;
+        $sModuleLink = str_replace('src/Resources/oxid/', '', readlink($sModulePath));
+        $sModuleLink = preg_replace('|\.\./|s', '', $sModuleLink);
+        return rtrim(INSTALLATION_ROOT_PATH, '/') . '/' . $sModuleLink;
     }
 
     public function getModuleAssetsPath($sModule, $sFile = '')
@@ -19,8 +22,11 @@ class ViewConfig extends ViewConfig_parent
             $sFile = '/' . $sFile;
         }
         $VendorPath = $this->getModuleVendorPath($sModule);
-        $Composer = json_decode(file_get_contents($VendorPath . 'composer.json'), true);
+
+
+        $Composer = json_decode(file_get_contents(rtrim($VendorPath, '/') . '/composer.json'), true);
         $sFile = rtrim(rtrim($this->getConfig()->getOutDir(), '/') . '/assets/modules/' . str_replace('/', '', $Composer['name']), '/') . $sFile;
+        
         if (file_exists($sFile) || is_dir($sFile)) {
             return $sFile;
         } else {

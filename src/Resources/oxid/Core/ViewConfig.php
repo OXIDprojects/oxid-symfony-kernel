@@ -16,25 +16,31 @@ class ViewConfig extends ViewConfig_parent
         return rtrim(INSTALLATION_ROOT_PATH, '/') . '/' . $sModuleLink;
     }
 
-    public function getModuleAssetsPath($sModule, $sFile = '')
+    public function getModuleAssetsPath($sModule, $sFile = '', $relative = false)
     {
         if (!$sFile || ($sFile[0] != '/')) {
             $sFile = '/' . $sFile;
         }
         $VendorPath = $this->getModuleVendorPath($sModule);
 
-
+        $OutDir = $this->getConfig()->getOutDir();
         $Composer = json_decode(file_get_contents(rtrim($VendorPath, '/') . '/composer.json'), true);
-        $sFile = rtrim(rtrim($this->getConfig()->getOutDir(), '/') . '/assets/modules/' . str_replace('/', '', $Composer['name']), '/') . $sFile;
-        
-        if (file_exists($sFile) || is_dir($sFile)) {
-            return $sFile;
+        $sFileAbsolute = rtrim(rtrim($OutDir, '/') . '/assets/modules/' . str_replace('/', '', $Composer['name']), '/') . $sFile;
+        $sFileRelative = $sFileAbsolute;
+        if($relative) {
+            $OutDir = '/' . str_replace(OX_BASE_PATH, '', $OutDir);
+            $sFileRelative = rtrim(rtrim($OutDir, '/') . '/assets/modules/' . str_replace('/', '', $Composer['name']), '/') . $sFile;
+        }
+
+        // die('<pre>' . __METHOD__ . ":\n" . print_r($sFileRelative, true) . "\n#################################\n\n" . '</pre>');
+        if (file_exists($sFileAbsolute) || is_dir($sFileAbsolute)) {
+            return $sFileRelative;
         } else {
             /**
              * Do not call oxNew in the exception handling of the module subsystem system, as the same module system will be
              * involved when calling oxNew
              */
-            $exception = new \OxidEsales\Eshop\Core\Exception\FileException("Requested file not found for module $sModule ($sFile)");
+            $exception = new \OxidEsales\Eshop\Core\Exception\FileException("Requested file not found for module $sModule ($sFileAbsolute)");
             if ($this->getConfig()->getConfigParam('iDebug')) {
                 throw $exception;
             } else {

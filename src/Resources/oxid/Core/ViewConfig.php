@@ -28,11 +28,10 @@ class ViewConfig extends ViewConfig_parent
         $sFileAbsolute = rtrim(rtrim($OutDir, '/') . '/assets/modules/' . str_replace('/', '', $Composer['name']), '/') . $sFile;
         $sFileRelative = $sFileAbsolute;
         if($relative) {
-            $OutDir = '/' . str_replace(OX_BASE_PATH, '', $OutDir);
+            $OutDir = '/' . ltrim($this->getConfig()->getOutDir(false), '/');
             $sFileRelative = rtrim(rtrim($OutDir, '/') . '/assets/modules/' . str_replace('/', '', $Composer['name']), '/') . $sFile;
         }
 
-        // die('<pre>' . __METHOD__ . ":\n" . print_r($sFileRelative, true) . "\n#################################\n\n" . '</pre>');
         if (file_exists($sFileAbsolute) || is_dir($sFileAbsolute)) {
             return $sFileRelative;
         } else {
